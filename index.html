@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Da_'s UmaTools — Umamusume: Pretty Derby companion tools</title>
+  <meta name="description" content="Your Umamusume: Pretty Derby companion — save trainees from screenshots, track every trophy, plan inheritance, spot underperforming Team Trials umas and look up anything in the game. Free, private, and right in your browser.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏇</text></svg>">
+  <link rel="stylesheet" href="assets/theme.css">
+  <script src="assets/nav.js" defer></script>
+  <style>
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px 60px; }
+    header.hero { text-align: center; padding: 48px 0 26px; }
+    .hero .logo { font-size: 52px; line-height: 1; }
+    .hero h1 { margin: 12px 0 6px; font-size: 2.1rem; letter-spacing: -.02em; }
+    .hero h1 span { color: var(--ut-accent); }
+    .hero p { margin: 0 auto; max-width: 620px; color: var(--ut-muted); }
+    .privacy-banner {
+      display: flex; gap: 10px; align-items: center; justify-content: center;
+      margin: 22px auto 0; padding: 10px 16px; max-width: 680px;
+      border: 1px solid var(--ut-line); border-radius: 999px; background: var(--ut-panel);
+      font-size: .92rem; color: var(--ut-muted);
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; margin-top: 34px; }
+    a.card {
+      display: flex; flex-direction: column; gap: 8px; padding: 22px;
+      background: var(--ut-panel); border: 1px solid var(--ut-line); border-radius: 16px;
+      box-shadow: var(--ut-shadow); text-decoration: none; color: inherit;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    a.card:hover { transform: translateY(-3px); border-color: var(--ut-accent); }
+    .card .icon { font-size: 34px; }
+    .card h2 { margin: 0; font-size: 1.2rem; }
+    .card .tag { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ut-accent); }
+    .card p { margin: 0; color: var(--ut-muted); font-size: .93rem; flex: 1; }
+    .card .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .card .chip {
+      font-size: .75rem; padding: 2px 9px; border-radius: 999px;
+      border: 1px solid var(--ut-line); color: var(--ut-muted); background: var(--ut-bg);
+    }
+    .card .go { margin-top: 10px; font-weight: 600; color: var(--ut-accent); font-size: .92rem; }
+    footer { margin-top: 46px; text-align: center; color: var(--ut-muted); font-size: .85rem; }
+    footer p { max-width: 700px; margin: 6px auto; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="logo">🏇</div>
+      <h1>Da_'s <span>UmaTools</span></h1>
+      <p>Your companion toolkit for <b>Umamusume: Pretty Derby</b> — save your trainees from
+         screenshots, chase every trophy, breed the perfect parents, climb Team Trials and look up
+         anything in the game.</p>
+      <div class="privacy-banner">🔒 Everything runs in your browser. No accounts, no uploads — your
+        screenshots, files and progress never leave your device.</div>
+    </header>
+
+    <main class="grid">
+      <a class="card" href="eyeuma/index.html">
+        <div class="icon">👁️</div>
+        <div class="tag">Trainee saver</div>
+        <h2>EyeUma</h2>
+        <p>Save your trainees without typing a thing. Drop in screenshots of their Details pages and
+           EyeUma reads off their stats, skills, race wins and sparks for you. Check the result,
+           tweak anything it missed, then download the profile in a format most community
+           Umamusume tools can read — Uma Tree and plenty of others.</p>
+        <div class="meta"><span class="chip">Just add screenshots</span><span class="chip">Review &amp; fix</span><span class="chip">Community-tool format</span></div>
+        <div class="go">Open EyeUma →</div>
+      </a>
+
+      <a class="card" href="completionist/index.html">
+        <div class="icon">🏆</div>
+        <div class="tag">Trophy hunting</div>
+        <h2>Completionist Tracker</h2>
+        <p>Going for every trophy? See exactly which races you've won and which ones are still
+           waiting. Tick races off as you win them — or upload your Trophy Room screenshots and let
+           it fill in your collection automatically. Then hunt down that last missing win.</p>
+        <div class="meta"><span class="chip">Auto-fill from screenshots</span><span class="chip">Progress saved</span></div>
+        <div class="go">Open Completionist Tracker →</div>
+      </a>
+
+      <a class="card" href="umatree/index.html">
+        <div class="icon">🌳</div>
+        <div class="tag">Breeding planner</div>
+        <h2>UmaTree</h2>
+        <p>Breed smarter. Add your umas, pick a goal, and Uma Tree finds the parent pairs and
+           inheritance loops that get you the sparks you actually want. Try a plan before you spend
+           a run on it, keep track of friend borrows, and see your whole family tree at a glance.</p>
+        <div class="meta"><span class="chip">Best parent pairs</span><span class="chip">Try before you run</span><span class="chip">Borrow tracking</span></div>
+        <div class="go">Open UmaTree →</div>
+      </a>
+
+      <a class="card" href="tt-tracker/index.html">
+        <div class="icon">🤖</div>
+        <div class="tag">Team Trials</div>
+        <h2>Uma Team Trials Tracker</h2>
+        <p>Find the weak links in your Team Trials lineup. Log each round's top and bottom
+           finishers and every uma gets a performance rating centred on 1000 — so underperformers
+           stand out and you know exactly who to replace. Ratings adapt when you rebuild an uma,
+           and you can back up or share your data any time.</p>
+        <div class="meta"><span class="chip">Spot underperformers</span><span class="chip">Quick round logging</span><span class="chip">Rebuild-aware ratings</span></div>
+        <div class="go">Open Team Trials Tracker →</div>
+      </a>
+
+      <a class="card" href="master-browser/index.html">
+        <div class="icon">🗄️</div>
+        <div class="tag">Game reference</div>
+        <h2>Master Browser</h2>
+        <p>Your own Umamusume encyclopedia. Look up any trainee, support card, skill or race and get
+           the full picture — effects, conditions, where to learn it, who else has it — all linked
+           together. Point it at your game's <code>master.mdb</code> file; it never leaves your
+           device.</p>
+        <div class="meta"><span class="chip">Search everything</span><span class="chip">Always up to date — it's your file</span></div>
+        <div class="go">Open Master Browser →</div>
+      </a>
+    </main>
+
+    <footer>
+      <p>Da_'s UmaTools is an unofficial fan project. Umamusume: Pretty Derby © Cygames, Inc.
+         This site is not affiliated with or endorsed by Cygames.</p>
+      <p>No sign-up, no downloads, no cost. Your progress is saved on this device, and anything you
+         upload is read right here in your browser — never sent anywhere.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,499 @@
+{
+  "game": "Umamusume: Pretty Derby",
+  "metric": "trainee evaluation rating",
+  "rule": "The rank is the highest threshold whose min is less than or equal to rating.",
+  "range_convention": "Inclusive min and max; max is null for the highest included rank.",
+  "coverage": "G through US9; Legend ranks are not included.",
+  "ranks": [
+    {
+      "rank": "G",
+      "min": 0,
+      "max": 299
+    },
+    {
+      "rank": "G+",
+      "min": 300,
+      "max": 599
+    },
+    {
+      "rank": "F",
+      "min": 600,
+      "max": 899
+    },
+    {
+      "rank": "F+",
+      "min": 900,
+      "max": 1299
+    },
+    {
+      "rank": "E",
+      "min": 1300,
+      "max": 1799
+    },
+    {
+      "rank": "E+",
+      "min": 1800,
+      "max": 2299
+    },
+    {
+      "rank": "D",
+      "min": 2300,
+      "max": 2899
+    },
+    {
+      "rank": "D+",
+      "min": 2900,
+      "max": 3499
+    },
+    {
+      "rank": "C",
+      "min": 3500,
+      "max": 4899
+    },
+    {
+      "rank": "C+",
+      "min": 4900,
+      "max": 6499
+    },
+    {
+      "rank": "B",
+      "min": 6500,
+      "max": 8199
+    },
+    {
+      "rank": "B+",
+      "min": 8200,
+      "max": 9999
+    },
+    {
+      "rank": "A",
+      "min": 10000,
+      "max": 12099
+    },
+    {
+      "rank": "A+",
+      "min": 12100,
+      "max": 14499
+    },
+    {
+      "rank": "S",
+      "min": 14500,
+      "max": 15899
+    },
+    {
+      "rank": "S+",
+      "min": 15900,
+      "max": 17499
+    },
+    {
+      "rank": "SS",
+      "min": 17500,
+      "max": 19199
+    },
+    {
+      "rank": "SS+",
+      "min": 19200,
+      "max": 19599
+    },
+    {
+      "rank": "UG",
+      "min": 19600,
+      "max": 19999
+    },
+    {
+      "rank": "UG1",
+      "min": 20000,
+      "max": 20399
+    },
+    {
+      "rank": "UG2",
+      "min": 20400,
+      "max": 20799
+    },
+    {
+      "rank": "UG3",
+      "min": 20800,
+      "max": 21199
+    },
+    {
+      "rank": "UG4",
+      "min": 21200,
+      "max": 21599
+    },
+    {
+      "rank": "UG5",
+      "min": 21600,
+      "max": 22099
+    },
+    {
+      "rank": "UG6",
+      "min": 22100,
+      "max": 22499
+    },
+    {
+      "rank": "UG7",
+      "min": 22500,
+      "max": 22999
+    },
+    {
+      "rank": "UG8",
+      "min": 23000,
+      "max": 23399
+    },
+    {
+      "rank": "UG9",
+      "min": 23400,
+      "max": 23899
+    },
+    {
+      "rank": "UF",
+      "min": 23900,
+      "max": 24299
+    },
+    {
+      "rank": "UF1",
+      "min": 24300,
+      "max": 24799
+    },
+    {
+      "rank": "UF2",
+      "min": 24800,
+      "max": 25299
+    },
+    {
+      "rank": "UF3",
+      "min": 25300,
+      "max": 25799
+    },
+    {
+      "rank": "UF4",
+      "min": 25800,
+      "max": 26299
+    },
+    {
+      "rank": "UF5",
+      "min": 26300,
+      "max": 26799
+    },
+    {
+      "rank": "UF6",
+      "min": 26800,
+      "max": 27299
+    },
+    {
+      "rank": "UF7",
+      "min": 27300,
+      "max": 27799
+    },
+    {
+      "rank": "UF8",
+      "min": 27800,
+      "max": 28299
+    },
+    {
+      "rank": "UF9",
+      "min": 28300,
+      "max": 28799
+    },
+    {
+      "rank": "UE",
+      "min": 28800,
+      "max": 29399
+    },
+    {
+      "rank": "UE1",
+      "min": 29400,
+      "max": 29899
+    },
+    {
+      "rank": "UE2",
+      "min": 29900,
+      "max": 30399
+    },
+    {
+      "rank": "UE3",
+      "min": 30400,
+      "max": 30999
+    },
+    {
+      "rank": "UE4",
+      "min": 31000,
+      "max": 31499
+    },
+    {
+      "rank": "UE5",
+      "min": 31500,
+      "max": 32099
+    },
+    {
+      "rank": "UE6",
+      "min": 32100,
+      "max": 32699
+    },
+    {
+      "rank": "UE7",
+      "min": 32700,
+      "max": 33199
+    },
+    {
+      "rank": "UE8",
+      "min": 33200,
+      "max": 33799
+    },
+    {
+      "rank": "UE9",
+      "min": 33800,
+      "max": 34399
+    },
+    {
+      "rank": "UD",
+      "min": 34400,
+      "max": 34999
+    },
+    {
+      "rank": "UD1",
+      "min": 35000,
+      "max": 35599
+    },
+    {
+      "rank": "UD2",
+      "min": 35600,
+      "max": 36199
+    },
+    {
+      "rank": "UD3",
+      "min": 36200,
+      "max": 36799
+    },
+    {
+      "rank": "UD4",
+      "min": 36800,
+      "max": 37499
+    },
+    {
+      "rank": "UD5",
+      "min": 37500,
+      "max": 38099
+    },
+    {
+      "rank": "UD6",
+      "min": 38100,
+      "max": 38699
+    },
+    {
+      "rank": "UD7",
+      "min": 38700,
+      "max": 39399
+    },
+    {
+      "rank": "UD8",
+      "min": 39400,
+      "max": 39999
+    },
+    {
+      "rank": "UD9",
+      "min": 40000,
+      "max": 40699
+    },
+    {
+      "rank": "UC",
+      "min": 40700,
+      "max": 41299
+    },
+    {
+      "rank": "UC1",
+      "min": 41300,
+      "max": 41999
+    },
+    {
+      "rank": "UC2",
+      "min": 42000,
+      "max": 42699
+    },
+    {
+      "rank": "UC3",
+      "min": 42700,
+      "max": 43399
+    },
+    {
+      "rank": "UC4",
+      "min": 43400,
+      "max": 43999
+    },
+    {
+      "rank": "UC5",
+      "min": 44000,
+      "max": 44699
+    },
+    {
+      "rank": "UC6",
+      "min": 44700,
+      "max": 45399
+    },
+    {
+      "rank": "UC7",
+      "min": 45400,
+      "max": 46199
+    },
+    {
+      "rank": "UC8",
+      "min": 46200,
+      "max": 46899
+    },
+    {
+      "rank": "UC9",
+      "min": 46900,
+      "max": 47599
+    },
+    {
+      "rank": "UB",
+      "min": 47600,
+      "max": 48299
+    },
+    {
+      "rank": "UB1",
+      "min": 48300,
+      "max": 48999
+    },
+    {
+      "rank": "UB2",
+      "min": 49000,
+      "max": 49799
+    },
+    {
+      "rank": "UB3",
+      "min": 49800,
+      "max": 50499
+    },
+    {
+      "rank": "UB4",
+      "min": 50500,
+      "max": 51299
+    },
+    {
+      "rank": "UB5",
+      "min": 51300,
+      "max": 51999
+    },
+    {
+      "rank": "UB6",
+      "min": 52000,
+      "max": 52799
+    },
+    {
+      "rank": "UB7",
+      "min": 52800,
+      "max": 53599
+    },
+    {
+      "rank": "UB8",
+      "min": 53600,
+      "max": 54399
+    },
+    {
+      "rank": "UB9",
+      "min": 54400,
+      "max": 55199
+    },
+    {
+      "rank": "UA",
+      "min": 55200,
+      "max": 55899
+    },
+    {
+      "rank": "UA1",
+      "min": 55900,
+      "max": 56699
+    },
+    {
+      "rank": "UA2",
+      "min": 56700,
+      "max": 57499
+    },
+    {
+      "rank": "UA3",
+      "min": 57500,
+      "max": 58399
+    },
+    {
+      "rank": "UA4",
+      "min": 58400,
+      "max": 59199
+    },
+    {
+      "rank": "UA5",
+      "min": 59200,
+      "max": 59999
+    },
+    {
+      "rank": "UA6",
+      "min": 60000,
+      "max": 60799
+    },
+    {
+      "rank": "UA7",
+      "min": 60800,
+      "max": 61699
+    },
+    {
+      "rank": "UA8",
+      "min": 61700,
+      "max": 62499
+    },
+    {
+      "rank": "UA9",
+      "min": 62500,
+      "max": 63399
+    },
+    {
+      "rank": "US",
+      "min": 63400,
+      "max": 64199
+    },
+    {
+      "rank": "US1",
+      "min": 64200,
+      "max": 65099
+    },
+    {
+      "rank": "US2",
+      "min": 65100,
+      "max": 66399
+    },
+    {
+      "rank": "US3",
+      "min": 66400,
+      "max": 67699
+    },
+    {
+      "rank": "US4",
+      "min": 67700,
+      "max": 68999
+    },
+    {
+      "rank": "US5",
+      "min": 69000,
+      "max": 70299
+    },
+    {
+      "rank": "US6",
+      "min": 70300,
+      "max": 71599
+    },
+    {
+      "rank": "US7",
+      "min": 71600,
+      "max": 72899
+    },
+    {
+      "rank": "US8",
+      "min": 72900,
+      "max": 74399
+    },
+    {
+      "rank": "US9",
+      "min": 74400,
+      "max": null
+    }
+  ]
+}

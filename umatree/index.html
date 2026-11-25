@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+<title>Uma Tree — Da_'s UmaTools</title>
+<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="../assets/theme.css">
+<script src="../assets/nav.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="brand">🌳 Uma Tree</div>
+  <div class="navwrap">
+    <nav id="nav" aria-label="Main">
+      <a href="#/dashboard">Today</a>
+      <a href="#/roster">Roster</a>
+      <a href="#/loops">Loops</a>
+      <a href="#/simulator">Plan a Run</a>
+      <a href="#/tree">Tree</a>
+      <a href="#/borrows">Borrows</a>
+      <a href="#/manage">Data</a>
+      <a href="#/objectives" title="Advanced: objectives, weights & white presets">⚙ Objectives</a>
+    </nav>
+  </div>
+</header>
+<main id="main"><div class="loading">Loading dataset…</div></main>
+<div id="modal-root"></div>
+<div id="toast" aria-live="polite"></div>
+<script src="db.js?v=11"></script>
+<script src="parse.js?v=11"></script>
+<script src="scoring.js?v=11"></script>
+<script src="app.js?v=11"></script>
+<script src="views.js?v=11"></script>
+<script src="editors.js?v=11"></script>
+<script>boot();</script>
+</body>
+</html>

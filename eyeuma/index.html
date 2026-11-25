@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>EyeUma — Da_'s UmaTools</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d7a4c'/%3E%3Cpath d='M6 16s4-6 10-6 10 6 10 6-4 6-10 6S6 16 6 16z' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../assets/theme.css">
+  <script src="../assets/nav.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>👁️ EyeUma</h1>
+    <span class="subtitle">Screenshots in, saved trainee out</span>
+    <span id="engine" class="pill" data-state="idle">OCR idle</span>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Screenshots</h2>
+        <button id="clear" class="ghost" type="button" disabled>Clear all</button>
+      </div>
+
+      <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Add screenshots">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <strong>Drop Umamusume Details screenshots</strong>
+        <span>or click to choose files · previously saved profiles welcome too</span>
+        <input id="files" type="file" accept="image/*,application/json,.json" multiple hidden>
+      </div>
+
+      <p class="privacy">Everything runs in this browser tab. Images are never uploaded.</p>
+
+      <ul id="file-list" class="file-list" aria-live="polite"></ul>
+
+      <div class="run-row">
+        <button id="run" class="primary" type="button" disabled>Read screenshots</button>
+        <span id="run-hint" class="hint">Add at least one screenshot.</span>
+      </div>
+
+      <details class="tips">
+        <summary>What to capture</summary>
+        <ul>
+          <li><b>Header</b> — capture one screenshot with the rating, stats and aptitudes visible. It appears on every page, so any screenshot works.</li>
+          <li><b>Skills tab</b> — scroll the list and capture every screen; overlaps are de-duplicated.</li>
+          <li><b>Career Info</b> — the summary block at the top (fans, wins, scenario, date), then scroll the race history and capture each screen.</li>
+          <li><b>Inspiration tab</b> — capture the Sparks grid and scroll through both parents; overlaps are de-duplicated. Drop a previously generated parent JSON to fill a slot with its full data (confirmed by its green spark).</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="panel output">
+      <div class="panel-head">
+        <h2>Output</h2>
+        <div class="output-actions">
+          <button id="reset" class="ghost" type="button" disabled>Reset edits</button>
+          <button id="copy" class="ghost" type="button" disabled>Copy JSON</button>
+          <button id="download" class="ghost" type="button" disabled>Download</button>
+        </div>
+      </div>
+
+      <div id="log" class="log" hidden></div>
+      <button id="review-open" class="review-open" type="button" hidden>Needs review</button>
+      <div id="warnings" class="warnings" aria-live="polite" hidden></div>
+
+      <div class="view-tabs" role="tablist" aria-label="Output view">
+        <button id="view-readable" class="tab" type="button" role="tab" aria-selected="true" aria-controls="readable">Readable</button>
+        <button id="view-json" class="tab" type="button" role="tab" aria-selected="false" aria-controls="json">JSON</button>
+      </div>
+
+      <div id="readable" class="readable" role="tabpanel" aria-labelledby="view-readable">
+        <p class="placeholder">Nothing read yet. Add screenshots and press “Read screenshots”.</p>
+      </div>
+      <pre id="json" class="json" role="tabpanel" aria-labelledby="view-json" aria-live="polite" hidden>Nothing read yet. Add screenshots and press “Read screenshots”.</pre>
+    </section>
+  </main>
+
+  <dialog id="review-modal" class="review-modal" aria-labelledby="review-modal-title">
+    <div class="review-modal-head">
+      <h2 id="review-modal-title">Needs review <span id="review-count" class="count"></span></h2>
+      <button id="review-close" class="ghost" type="button" aria-label="Close review window">×</button>
+    </div>
+    <div id="reviews" class="reviews"></div>
+  </dialog>
+
+  <footer class="credit">
+    Skill icons from the <a href="https://umamusume.fandom.com/wiki/Game:List_of_Skills" target="_blank" rel="noreferrer">Umamusume Wiki</a> (CC BY-SA 4.0). Game assets © Cygames.
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

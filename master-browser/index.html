@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Browser — Da_'s UmaTools</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../assets/theme.css">
+  <script src="../assets/nav.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏇</text></svg>">
+  <style>
+    [hidden] { display: none !important; }
+    #load-gate { max-width: 640px; margin: 8vh auto; padding: 0 16px; }
+    #load-gate .gate-panel { padding: 28px; }
+    #load-gate h1 { margin: 0 0 8px; }
+    #load-gate .drop { border: 2px dashed var(--ut-muted); border-radius: 12px; padding: 36px 20px; text-align: center; margin: 18px 0; cursor: pointer; }
+    #load-gate .drop.dragover { border-color: var(--ut-accent); background: rgba(53,160,107,.08); }
+    #load-gate .privacy { font-size: .9em; opacity: .8; }
+    #load-gate .gate-error { color: var(--ut-danger); margin-top: 10px; white-space: pre-wrap; }
+    #load-gate .gate-status { margin-top: 10px; }
+    #db-bar { display: flex; gap: 8px; align-items: center; margin-left: auto; font-size: .85em; }
+    #db-bar button { cursor: pointer; }
+    #db-name { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: .8; }
+  </style>
+</head>
+<body>
+  <header id="topbar">
+    <a class="brand" href="#/">🗄️ Master <span>Browser</span></a>
+    <div class="global-search">
+      <input id="global-search" type="search" placeholder="Search trainees, skills, support cards, races…" autocomplete="off">
+      <div id="search-suggest" class="suggest hidden"></div>
+    </div>
+    <div id="db-bar" hidden>
+      <span id="db-name"></span>
+      <button id="db-change" class="tab" type="button">Load another file</button>
+    </div>
+  </header>
+
+  <div id="load-gate">
+    <div class="gate-panel panel">
+      <h1>🗄 Master Browser</h1>
+      <p>Look up any trainee, support card, skill or race and get the full picture — stats, effects,
+         where to learn it and who else has it, all linked together like a personal wiki.</p>
+      <p><b>Bring your own database.</b> Select your <code>master.mdb</code> file to start.</p>
+      <div class="drop" id="gate-drop" tabindex="0" role="button" aria-label="Choose master.mdb">
+        <p><b>Drop master.mdb here</b></p>
+        <p>or click to choose the file</p>
+        <input type="file" id="gate-file" accept=".mdb,application/octet-stream" hidden>
+      </div>
+      <p class="privacy">🔒 Everything runs in this browser tab. Your file is <b>never uploaded</b> and is
+        not stored anywhere — it lives only in memory until you close or reload the page.</p>
+      <div class="gate-status" id="gate-status"></div>
+      <div class="gate-error" id="gate-error"></div>
+      <p class="small muted">Tip: on Android the file lives under
+        <code>Android/data/com.cygames.umamusume/files/master/master.mdb</code> (global version package name may differ).</p>
+    </div>
+  </div>
+
+  <div id="layout" hidden>
+    <nav id="sidebar">
+      <div class="nav-group">
+        <div class="nav-title">Browse</div>
+        <a href="#/" data-nav="home">🏠 Home</a>
+        <a href="#/trainees" data-nav="trainees">🎀 Trainees</a>
+        <a href="#/characters" data-nav="characters">👤 Characters</a>
+        <a href="#/support-cards" data-nav="support-cards">🃏 Support Cards</a>
+        <a href="#/skills" data-nav="skills">✨ Skills</a>
+        <a href="#/races" data-nav="races">🏁 Races</a>
+        <a href="#/items" data-nav="items">🎒 Items</a>
+        <a href="#/npcs" data-nav="npcs">🏇 NPC Racers</a>
+        <a href="#/tt-builds" data-nav="tt-builds">🤖 Team Trials Builds</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-title">More Content</div>
+        <a href="#/g/racecourses" data-nav="g-racecourses">🏟️ Racecourses</a>
+        <a href="#/g/scenarios" data-nav="g-scenarios">📖 Scenarios</a>
+        <a href="#/g/succession-factors" data-nav="g-succession-factors">🧬 Succession Factors</a>
+        <a href="#/g/gacha" data-nav="g-gacha">🎰 Gacha Banners</a>
+        <a href="#/g/songs" data-nav="g-songs">🎵 Songs</a>
+        <a href="#/g/lives" data-nav="g-lives">🎤 Lives</a>
+        <a href="#/g/dresses" data-nav="g-dresses">👗 Costumes</a>
+        <a href="#/g/mobs" data-nav="g-mobs">👥 Mob Characters</a>
+        <a href="#/g/story-events" data-nav="g-story-events">🎪 Story Events</a>
+        <a href="#/g/main-story" data-nav="g-main-story">📚 Main Story</a>
+        <a href="#/g/chara-stories" data-nav="g-chara-stories">💬 Character Stories</a>
+        <a href="#/g/missions" data-nav="g-missions">📋 Missions</a>
+        <a href="#/g/trainings" data-nav="g-trainings">🏋️ Training</a>
+        <a href="#/g/nicknames" data-nav="g-nicknames">🏷️ Titles</a>
+        <a href="#/g/honors" data-nav="g-honors">🎖️ Honors</a>
+        <a href="#/g/item-exchanges" data-nav="g-item-exchanges">🛒 Shop Exchanges</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-title">Database</div>
+        <a href="#/catalog" data-nav="catalog">🗂️ Table Catalog</a>
+        <a href="#/tables" data-nav="tables">🗄 Raw Tables</a>
+      </div>
+      <div class="nav-note">Data: your <code>master.mdb</code>, parsed locally.<br>Labels are best-effort community datamine knowledge.</div>
+    </nav>
+    <main id="content"><div class="loading">Loading…</div></main>
+  </div>
+  <script src="vendor/sql-wasm.js"></script>
+  <script src="data.js"></script>
+  <script src="wiki.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

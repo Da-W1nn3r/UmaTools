@@ -1,0 +1,218 @@
+/* ============================================================
+   Da_'s UmaTools — shared design system
+   Loaded AFTER each tool's own stylesheet; remaps every tool's
+   CSS variables onto one warm-dark palette with a green accent,
+   and styles the shared navbar injected by assets/nav.js.
+   ============================================================ */
+
+:root {
+  color-scheme: dark;
+
+  /* Unified tokens */
+  --ut-bg: #171512;
+  --ut-panel: #211e1a;
+  --ut-panel2: #2a2620;
+  --ut-line: #37322b;
+  --ut-ink: #ece7de;
+  --ut-muted: #9b9385;
+  --ut-accent: #35a06b;
+  --ut-accent-strong: #2c8a5b;
+  --ut-accent-ink: #0d1a12;
+  --ut-danger: #ef6b6b;
+  --ut-warn: #e2c46a;
+  --ut-ok: #6cd98b;
+  --ut-radius: 12px;
+  --ut-nav-h: 52px;
+  --ut-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 6px 24px rgba(0, 0, 0, .3);
+
+  /* ---- Map every tool's variable names onto the tokens ---- */
+  --bg: var(--ut-bg);
+  --panel: var(--ut-panel);
+  --panel2: var(--ut-panel2);
+  --card: var(--ut-panel);
+  --border: var(--ut-line);
+  --line: var(--ut-line);
+  --text: var(--ut-ink);
+  --ink: var(--ut-ink);
+  --text-dim: var(--ut-muted);
+  --dim: var(--ut-muted);
+  --muted: var(--ut-muted);
+  --mute: var(--ut-muted);
+  --accent: var(--ut-accent);
+  --acc: var(--ut-accent);
+  --accent-ink: var(--ut-accent-ink);
+  --brand: var(--ut-accent);
+  --brand2: var(--ut-accent-strong);
+  --chip: var(--ut-panel2);
+  --tile-empty: var(--ut-panel2);
+  --radius: var(--ut-radius);
+  --shadow: var(--ut-shadow);
+  --danger: var(--ut-danger);
+  --red: var(--ut-danger);
+  --down: var(--ut-danger);
+  --up: #4cc38a;
+  --warn-bg: #3a2f10;
+  --warn-border: #6b5518;
+  --warn-text: #e2c46a;
+  --done-bg: #12291a;
+  --done-text: #6cd98b;
+  --code-bg: #1b1815;
+  --code-key: #7bd9a5;
+  --code-string: #d9b38c;
+  --code-number: #8fd98b;
+  --code-literal: #c9a6ff;
+  --g1: #c9962b;
+  --g1-bg: #3a2f10;
+  --g2: #9b9385;
+  --g2-bg: #2a2620;
+  --g3: #b08968;
+  --g3-bg: #2e2216;
+}
+
+/* ---- Base ---- */
+body {
+  background: var(--ut-bg);
+  color: var(--ut-ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+:focus-visible { outline: 2px solid var(--ut-accent); outline-offset: 1px; }
+* { scrollbar-color: #4a453c var(--ut-bg); }
+::selection { background: #2c8a5b66; }
+
+/* ============================================================
+   Shared navbar (injected by nav.js as first child of <body>)
+   ============================================================ */
+.ut-nav {
+  position: sticky; top: 0; z-index: 90;
+  height: var(--ut-nav-h);
+  display: flex; align-items: center; gap: 14px;
+  padding: 0 16px;
+  background: #1d1a16;
+  border-bottom: 1px solid var(--ut-line);
+}
+.ut-brand {
+  font-weight: 700; font-size: 15px; white-space: nowrap;
+  color: var(--ut-ink); text-decoration: none;
+}
+.ut-brand:hover { text-decoration: none; }
+.ut-brand span { color: var(--ut-accent); }
+.ut-links {
+  display: flex; gap: 4px; flex: 1; min-width: 0; position: relative;
+  overflow-x: auto; scrollbar-width: none;
+}
+.ut-links::-webkit-scrollbar { display: none; }
+.ut-links a {
+  color: var(--ut-muted); text-decoration: none;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 13.5px; font-weight: 500; white-space: nowrap;
+}
+.ut-links a:hover { color: var(--ut-ink); background: var(--ut-panel2); text-decoration: none; }
+.ut-links a.active { background: var(--ut-accent); color: var(--ut-accent-ink); font-weight: 600; }
+@media (max-width: 700px) {
+  .ut-nav { gap: 8px; padding: 0 10px; }
+  .ut-brand { font-size: 14px; }
+  .ut-links a { padding: 5px 9px; font-size: 12.5px; }
+}
+
+/* ============================================================
+   Standardised tool header bar (directly under the navbar)
+   ============================================================ */
+body[data-tool="eyeuma"] .app-header,
+body[data-tool="completionist"] .app-header,
+body[data-tool="umatree"] header,
+body[data-tool="tt-tracker"] header,
+body[data-tool="master-browser"] #topbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  padding: 10px 20px; margin: 0;
+  background: var(--ut-panel);
+  border-bottom: 1px solid var(--ut-line);
+}
+body[data-tool="eyeuma"] .app-header h1,
+body[data-tool="completionist"] .app-header h1,
+body[data-tool="tt-tracker"] header h1,
+body[data-tool="umatree"] .brand,
+body[data-tool="master-browser"] .brand {
+  font-size: 17px; font-weight: 700; margin: 0; color: var(--ut-ink);
+}
+
+/* ============================================================
+   EyeUma
+   ============================================================ */
+body[data-tool="eyeuma"] { padding: 0; max-width: none; }
+body[data-tool="eyeuma"] .layout { max-width: 1680px; margin: 0 auto; padding: 16px; }
+body[data-tool="eyeuma"] .credit { padding: 0 16px 14px; }
+body[data-tool="eyeuma"] .panel { border-radius: var(--ut-radius); }
+
+/* ============================================================
+   Completionist Tracker
+   ============================================================ */
+body[data-tool="completionist"] { padding: 0; }
+body[data-tool="completionist"] .controls { margin: 16px 16px 16px; border-radius: var(--ut-radius); }
+body[data-tool="completionist"] #app { margin: 0 16px 16px; }
+
+/* ============================================================
+   Uma Tree
+   ============================================================ */
+body[data-tool="umatree"] header { position: sticky; top: var(--ut-nav-h); padding: 10px 20px; }
+body[data-tool="umatree"] nav a.active { color: var(--ut-accent-ink); }
+body[data-tool="umatree"] td { border-bottom-color: var(--ut-line); }
+body[data-tool="umatree"] tr:hover td { background: #26221c; }
+body[data-tool="umatree"] .list-item { border-bottom-color: var(--ut-line); }
+body[data-tool="umatree"] button.primary { color: var(--ut-accent-ink); }
+
+/* ============================================================
+   Team Trials Tracker
+   ============================================================ */
+body[data-tool="tt-tracker"] .avatar { background: var(--ut-panel2); }
+body[data-tool="tt-tracker"] .card select,
+body[data-tool="tt-tracker"] #search { background: var(--ut-bg); }
+body[data-tool="tt-tracker"] #about-body code { background: var(--ut-bg); }
+body[data-tool="tt-tracker"] button.primary { color: var(--ut-accent-ink); }
+body[data-tool="tt-tracker"] button { border-radius: 8px; }
+
+/* ============================================================
+   Master Browser (light-original → warm dark)
+   ============================================================ */
+body[data-tool="master-browser"] #topbar {
+  position: sticky; top: var(--ut-nav-h);
+  background: var(--ut-panel); color: var(--ut-ink); box-shadow: none;
+}
+body[data-tool="master-browser"] .brand span { color: var(--ut-muted); opacity: 1; }
+body[data-tool="master-browser"] #global-search {
+  background: var(--ut-panel2); color: var(--ut-ink);
+  border: 1px solid var(--ut-line);
+}
+body[data-tool="master-browser"] #sidebar {
+  top: calc(var(--ut-nav-h) + 60px);
+  height: calc(100vh - var(--ut-nav-h) - 60px);
+}
+body[data-tool="master-browser"] .infobox { top: calc(var(--ut-nav-h) + 76px); }
+body[data-tool="master-browser"] .suggest { background: var(--ut-panel); border: 1px solid var(--ut-line); }
+body[data-tool="master-browser"] .suggest .sg-group { background: var(--ut-panel2); }
+body[data-tool="master-browser"] .suggest a:hover { background: var(--ut-panel2); }
+body[data-tool="master-browser"] #sidebar a:hover { background: var(--ut-panel2); }
+body[data-tool="master-browser"] #sidebar a.active { background: var(--ut-accent); color: var(--ut-accent-ink); }
+body[data-tool="master-browser"] .error { background: #2a1616; border-color: #5c2a2a; color: #ef9a9a; }
+body[data-tool="master-browser"] .home-search input { background: var(--ut-panel2); color: var(--ut-ink); }
+body[data-tool="master-browser"] .home-search button { background: var(--ut-accent); color: var(--ut-accent-ink); }
+body[data-tool="master-browser"] .toolbar input[type="search"],
+body[data-tool="master-browser"] .toolbar select { background: var(--ut-panel2); color: var(--ut-ink); }
+body[data-tool="master-browser"] table.data { background: var(--ut-panel); }
+body[data-tool="master-browser"] table.data th { background: var(--ut-panel2); }
+body[data-tool="master-browser"] table.data tbody tr:hover { background: #26221c; }
+body[data-tool="master-browser"] .apt-cell { background: var(--ut-panel2); }
+body[data-tool="master-browser"] a.chip:hover { background: var(--ut-panel2); }
+body[data-tool="master-browser"] .chip.unique { background: linear-gradient(90deg, #3a2f10, #3a2430); border-color: #8a6d2f; }
+body[data-tool="master-browser"] .chip.evo { background: linear-gradient(90deg, #1e2a3a, #2a2038); border-color: #5c5480; }
+body[data-tool="master-browser"] .tab { background: var(--ut-panel2); color: var(--ut-ink); }
+body[data-tool="master-browser"] .tab.active { background: var(--ut-accent); color: var(--ut-accent-ink); border-color: var(--ut-accent); }
+body[data-tool="master-browser"] .skill-desc { background: var(--ut-panel2); }
+body[data-tool="master-browser"] .ability-item { background: var(--ut-panel); }
+body[data-tool="master-browser"] .infobox .ib-header { background: linear-gradient(135deg, var(--ut-accent-strong), #1d6a44); color: #fff; }
+body[data-tool="master-browser"] .grade-G1 { background: #1e2a3a; color: #8fb8ff; }
+body[data-tool="master-browser"] .grade-G2 { background: #3a2430; color: #ff9dc0; }
+body[data-tool="master-browser"] .grade-G3 { background: #12291a; color: #6cd98b; }
+body[data-tool="master-browser"] .grade-EX { background: #3a2f10; color: #e2c46a; }
+body[data-tool="master-browser"] .apt-G { background: #4a453c; color: #d5cfc2; }
+body[data-tool="master-browser"] a.pill.link:hover { color: var(--ut-accent-ink); }
+body[data-tool="master-browser"] .condition-box { background: #141210; }
