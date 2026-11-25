@@ -9,7 +9,7 @@ const NOTES = [
     id: "team-trials-spirit-skills",
     file: "notes/team-trials-spirit-skills.md",
     title: "Competitive Spirit, Lone Wolf & Sympathy: what actually activates in Team Trials",
-    tag: "Team Trials",
+    tags: ["Team Trials", "Competitive Spirit", "Lone Wolf", "Sympathy"],
     date: "2026-11-26",
     summary: "A data-driven look at three green skills in the 12-runner Team Trials field: " +
       "Lone Wolf is near-free points in Sprint/Mile/Dirt, Sympathy only works as a full-team " +
@@ -152,17 +152,100 @@ const app = document.getElementById("app");
 const hero = document.getElementById("hero");
 const fmtDate = iso => new Date(iso + "T00:00:00").toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 
-function showList() {
-  hero.style.display = "";
-  document.title = "Torena's Notes — Da_'s UmaTools";
-  app.innerHTML = '<div class="notes-list">' + NOTES.map(n => `
+/* List-view filter state (kept across article visits) */
+const filter = { q: "", tags: new Set(), allTags: false };
+const COLLAPSED_TAGS = 8; // most-used chips shown before "Show all" (scales as notes grow)
+
+function noteMatches(n) {
+  if (filter.tags.size && !n.tags.some(t => filter.tags.has(t))) return false;
+  const hay = (n.title + " " + n.summary + " " + n.tags.join(" ")).toLowerCase();
+  return filter.q.toLowerCase().split(/\s+/).every(w => !w || hay.includes(w));
+}
+
+function noteCard(n) {
+  return `
     <a class="note-card" href="#${n.id}">
-      <div class="meta"><span class="tag">${escapeHtml(n.tag)}</span><span class="date">${fmtDate(n.date)}</span></div>
+      <div class="meta">${n.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}<span class="date">${fmtDate(n.date)}</span></div>
       <h2>${escapeHtml(n.title)}</h2>
       <p>${escapeHtml(n.summary)}</p>
       <div class="go">Read the note →</div>
-    </a>`).join("") + "</div>";
+    </a>`;
 }
+
+function showList() {
+  hero.style.display = "";
+  document.title = "Torena's Notes — Da_'s UmaTools";
+
+  // Tag chips: every tag used by any note, most-used first (ties alphabetical).
+  // With many tags, only the top COLLAPSED_TAGS (+ any active ones) show until
+  // "Show all" is clicked; search also matches tags, so rare ones stay findable.
+  const counts = new Map();
+  for (const n of NOTES) for (const t of n.tags) counts.set(t, (counts.get(t) || 0) + 1);
+  const tags = [...counts.keys()].sort((a, b) => counts.get(b) - counts.get(a) || a.localeCompare(b));
+
+  app.innerHTML = `
+    <div class="toolbar">
+      <input type="search" id="note-search" placeholder="Search notes and tags…  ( / )" aria-label="Search notes">
+      <div class="tag-chips" id="tag-chips" role="group" aria-label="Filter by tag"></div>
+    </div>
+    <div class="list-status" id="list-status"></div>
+    <div class="notes-list" id="notes-list"></div>`;
+
+  const input = app.querySelector("#note-search");
+  const list = app.querySelector("#notes-list");
+  const status = app.querySelector("#list-status");
+  const chipBox = app.querySelector("#tag-chips");
+  input.value = filter.q;
+
+  function renderChips() {
+    const top = new Set(tags.slice(0, COLLAPSED_TAGS));
+    const visible = tags.filter(t => filter.allTags || top.has(t) || filter.tags.has(t));
+    let html = visible.map(t => {
+      const on = filter.tags.has(t);
+      return `<button class="tag-chip${on ? " active" : ""}" data-tag="${escapeHtml(t)}" aria-pressed="${on}">${escapeHtml(t)} <span class="count">${counts.get(t)}</span></button>`;
+    }).join("");
+    if (tags.length > COLLAPSED_TAGS) {
+      html += `<button class="tag-chip more" data-more="1">${filter.allTags ? "Show fewer ▴" : `Show all ${tags.length} tags ▾`}</button>`;
+    }
+    chipBox.innerHTML = html;
+  }
+
+  function update() {
+    const shown = NOTES.filter(noteMatches);
+    list.innerHTML = shown.length
+      ? shown.map(noteCard).join("")
+      : '<p class="status">No notes match. <a href="" id="clear-filters">Clear filters</a></p>';
+    const filtered = filter.q || filter.tags.size;
+    status.textContent = filtered ? `${shown.length} of ${NOTES.length} note${NOTES.length === 1 ? "" : "s"}` : "";
+    renderChips();
+    const clear = list.querySelector("#clear-filters");
+    if (clear) clear.addEventListener("click", e => {
+      e.preventDefault();
+      filter.q = ""; filter.tags.clear(); input.value = "";
+      update();
+    });
+  }
+
+  input.addEventListener("input", () => { filter.q = input.value; update(); });
+  chipBox.addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    if (btn.dataset.more) { filter.allTags = !filter.allTags; renderChips(); return; }
+    const t = btn.dataset.tag;
+    filter.tags.has(t) ? filter.tags.delete(t) : filter.tags.add(t);
+    update();
+  });
+  update();
+}
+
+// "/" focuses the search box while the list is showing.
+document.addEventListener("keydown", e => {
+  if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+  const input = document.getElementById("note-search");
+  if (!input || /^(input|textarea|select)$/i.test(document.activeElement.tagName)) return;
+  e.preventDefault();
+  input.focus();
+});
 
 async function showNote(id) {
   const note = NOTES.find(n => n.id === id);
@@ -177,9 +260,12 @@ async function showNote(id) {
     if (location.hash.slice(1) !== id) return; // navigated away while loading
     app.innerHTML = `
       <a class="back" href="#">← All notes</a>
-      <div class="article-meta"><span class="tag">${escapeHtml(note.tag)}</span><span>${fmtDate(note.date)}</span></div>
+      <div class="article-meta">${note.tags.map(t => `<a class="tag" href="#" data-tag="${escapeHtml(t)}" title="Show all notes tagged ${escapeHtml(t)}">${escapeHtml(t)}</a>`).join("")}<span>${fmtDate(note.date)}</span></div>
       <article class="note">${renderMarkdown(md)}</article>
       <a class="back" href="#">← All notes</a>`;
+    app.querySelectorAll(".article-meta a.tag").forEach(a => a.addEventListener("click", () => {
+      filter.q = ""; filter.tags = new Set([a.dataset.tag]); // hashchange → filtered list
+    }));
     window.scrollTo(0, 0);
   } catch (e) {
     app.innerHTML = '<p class="status">Couldn\'t load this note. If you opened the file directly, try serving the site over HTTP.</p>';

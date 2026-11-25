@@ -33,8 +33,15 @@ site/
 
 1. Drop the markdown file into `torena-notes/notes/`.
 2. Add an entry to the `NOTES` array at the top of `torena-notes/app.js`
-   (id, file, title, tag, date, summary). It appears on the notes index
+   (id, file, title, tags, date, summary). It appears on the notes index
    and is readable at `torena-notes/index.html#<id>`.
+
+The index has a search box (matches title, summary and tags; `/` focuses it)
+and tag filter chips generated automatically from the `tags` arrays — multiple
+selected tags combine as OR, and combine with the search text as AND.
+To stay usable as the tag count grows, chips are sorted by usage and collapsed
+to the top 8 (plus any active tags) behind a "Show all N tags" toggle; rare tags
+remain reachable via search, which also matches tag names.
 
 ## Shared design system
 

@@ -17,8 +17,35 @@
   header.hero h1 span { color: var(--ut-accent); }
   header.hero p { margin: 0 auto; max-width: 640px; color: var(--ut-muted); }
 
+  /* ---- Note list: search + tag filters ---- */
+  .toolbar { margin-top: 28px; display: grid; gap: 12px; }
+  #note-search {
+    width: 100%; box-sizing: border-box;
+    padding: 10px 16px; font-size: .95rem;
+    color: var(--ut-ink); background: var(--ut-panel);
+    border: 1px solid var(--ut-line); border-radius: 999px;
+  }
+  #note-search::placeholder { color: var(--ut-muted); }
+  #note-search:focus { outline: 2px solid var(--ut-accent); outline-offset: 1px; }
+  .tag-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 13px; border-radius: 999px; cursor: pointer;
+    font-size: .82rem; font-weight: 600; font-family: inherit;
+    color: var(--ut-muted); background: var(--ut-panel);
+    border: 1px solid var(--ut-line);
+    transition: border-color .12s ease, color .12s ease, background .12s ease;
+  }
+  .tag-chip:hover { color: var(--ut-ink); border-color: var(--ut-accent); }
+  .tag-chip.active { color: var(--ut-accent-ink); background: var(--ut-accent); border-color: var(--ut-accent); }
+  .tag-chip .count { font-size: .72rem; font-weight: 500; opacity: .75; }
+  .tag-chip.more { border-style: dashed; font-weight: 500; }
+  .list-status { margin-top: 14px; font-size: .82rem; color: var(--ut-muted); }
+  .list-status:empty { display: none; }
+  .status a { color: var(--ut-accent); }
+
   /* ---- Note list ---- */
-  .notes-list { display: grid; gap: 16px; margin-top: 30px; }
+  .notes-list { display: grid; gap: 16px; margin-top: 16px; }
   a.note-card {
     display: block; padding: 20px 22px;
     background: var(--ut-panel); border: 1px solid var(--ut-line); border-radius: 16px;
@@ -41,6 +68,8 @@
   .back:hover { text-decoration: underline; }
   .article-meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0 2px; font-size: .8rem; color: var(--ut-muted); }
   .article-meta .tag { font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ut-accent); font-size: .72rem; }
+  .article-meta a.tag { text-decoration: none; cursor: pointer; }
+  .article-meta a.tag:hover { text-decoration: underline; }
   article.note {
     margin-top: 10px; padding: 26px 30px 34px;
     background: var(--ut-panel); border: 1px solid var(--ut-line); border-radius: 16px;
