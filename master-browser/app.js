@@ -850,7 +850,7 @@ document.addEventListener("click", (e) => {
   if (!e.target.closest(".global-search")) gsBox.classList.add("hidden");
 });
 
-/* ---------------- master.mdb load gate ---------------- */
+/* ---------------- master.mdb load gate + local cache ---------------- */
 const gate = document.getElementById("load-gate");
 const gateDrop = document.getElementById("gate-drop");
 const gateFile = document.getElementById("gate-file");
@@ -859,9 +859,104 @@ const gateError = document.getElementById("gate-error");
 const layout = document.getElementById("layout");
 const dbBar = document.getElementById("db-bar");
 
+/* The uploaded file's bytes are cached in IndexedDB so the database survives
+   closing the tab. Nothing ever leaves the device; "Forget cached copy" wipes it.
+   "meta" and "bytes" are separate keys so the gate can show the cached file's
+   date/version without reading the (large) blob. */
+const MdbCache = {
+  db: null,
+  open() {
+    if (this.db) return Promise.resolve(this.db);
+    return new Promise((res, rej) => {
+      const req = indexedDB.open("master_browser", 1);
+      req.onupgradeneeded = () => {
+        if (!req.result.objectStoreNames.contains("kv")) req.result.createObjectStore("kv");
+      };
+      req.onsuccess = () => { this.db = req.result; res(this.db); };
+      req.onerror = () => rej(req.error);
+    });
+  },
+  async read(keys) {
+    const d = await this.open();
+    return new Promise((res, rej) => {
+      const s = d.transaction("kv", "readonly").objectStore("kv");
+      const out = {};
+      let pending = keys.length;
+      for (const k of keys) {
+        const r = s.get(k);
+        r.onsuccess = () => { out[k] = r.result; if (!--pending) res(out); };
+        r.onerror = () => rej(r.error);
+      }
+    });
+  },
+  async getMeta() { return (await this.read(["meta"])).meta || null; },
+  async get() {
+    const { meta, bytes } = await this.read(["meta", "bytes"]);
+    return meta && bytes ? { ...meta, bytes } : null;
+  },
+  async put(rec) {
+    const { bytes, ...meta } = rec;
+    const d = await this.open();
+    return new Promise((res, rej) => {
+      const t = d.transaction("kv", "readwrite");
+      const s = t.objectStore("kv");
+      s.put(meta, "meta");
+      s.put(bytes, "bytes");
+      t.oncomplete = res;
+      t.onerror = t.onabort = () => rej(t.error || new Error("cache write aborted"));
+    });
+  },
+  async clear() {
+    const d = await this.open();
+    return new Promise((res, rej) => {
+      const t = d.transaction("kv", "readwrite");
+      t.objectStore("kv").clear();
+      t.oncomplete = res; t.onerror = () => rej(t.error);
+    });
+  },
+};
+
+const fmtMB = (n) => (n / 1048576).toFixed(1);
+const fmtDate = (ms) => ms ? new Date(ms).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : null;
+function cacheLabel(meta) {
+  const bits = [`${fmtMB(meta.size)} MB`];
+  if (meta.version) bits.push(`version ${meta.version}`);
+  const fd = fmtDate(meta.fileModified);
+  if (fd) bits.push(`file dated ${fd}`);
+  bits.push(`cached ${fmtDate(meta.savedAt)}`);
+  return bits.join(" · ");
+}
+
+/* Best-effort data version: some master.mdb builds carry a version table.
+   Most don't — then the file's last-modified date is the version marker. */
+async function detectVersion() {
+  try {
+    const tables = await MasterWiki.api("/tables/");
+    const vt = tables.find((t) => t === "version") || tables.find((t) => /version/i.test(t));
+    if (!vt) return null;
+    const rows = await MasterWiki.api(`/tables/${enc(vt)}/rows?limit=3`);
+    const vals = rows.flatMap((r) => Object.values(r)).filter((v) => v != null && v !== "");
+    return vals.length ? vals.join(".") : null;
+  } catch { return null; }
+}
+
+function enterApp(meta, note = "") {
+  clearCache();
+  document.getElementById("db-name").textContent = meta.name;
+  const metaEl = document.getElementById("db-meta");
+  metaEl.textContent = cacheLabel(meta) + (note ? ` · ${note}` : "");
+  metaEl.title = "Cached locally in this browser (IndexedDB) — never uploaded";
+  gate.hidden = true;
+  layout.hidden = false;
+  dbBar.hidden = false;
+  gateStatus.textContent = "";
+  gateError.textContent = "";
+  render();
+}
+
 async function loadMasterFile(file) {
   gateError.textContent = "";
-  gateStatus.textContent = `Reading ${file.name} (${(file.size / 1048576).toFixed(1)} MB)…`;
+  gateStatus.textContent = `Reading ${file.name} (${fmtMB(file.size)} MB)…`;
   try {
     const bytes = new Uint8Array(await file.arrayBuffer());
     gateStatus.textContent = "Initialising SQLite engine…";
@@ -869,18 +964,55 @@ async function loadMasterFile(file) {
     gateStatus.textContent = "Opening database…";
     await new Promise((r) => setTimeout(r, 30)); // let the status paint
     MasterWiki.load(bytes);
-    clearCache();
-    document.getElementById("db-name").textContent = file.name;
-    gate.hidden = true;
-    layout.hidden = false;
-    dbBar.hidden = false;
-    gateStatus.textContent = "";
-    render();
+    const meta = { name: file.name, size: file.size, fileModified: file.lastModified || null,
+      savedAt: Date.now(), version: await detectVersion() };
+    gateStatus.textContent = "Caching for next visit…";
+    let note = "";
+    try { await MdbCache.put({ ...meta, bytes }); }
+    catch { note = "not cached (browser storage unavailable or full)"; }
+    enterApp(meta, note);
   } catch (e) {
     gateStatus.textContent = "";
     gateError.textContent = "Failed to load: " + e.message;
   }
 }
+
+async function loadCached() {
+  gateError.textContent = "";
+  try {
+    gateStatus.textContent = "Looking for a cached master.mdb…";
+    const rec = await MdbCache.get();
+    if (!rec) { gateStatus.textContent = ""; return false; }
+    gateStatus.textContent = `Loading cached ${rec.name} (${cacheLabel(rec)})…`;
+    await MasterWiki.init();
+    await new Promise((r) => setTimeout(r, 30));
+    MasterWiki.load(rec.bytes);
+    enterApp(rec);
+    return true;
+  } catch (e) {
+    // corrupt/incompatible cache — drop it and fall back to the file picker
+    gateStatus.textContent = "";
+    gateError.textContent = "Cached copy failed to load (" + e.message + "). Please select the file again.";
+    MdbCache.clear().catch(() => {});
+    refreshGateCached();
+    return false;
+  }
+}
+
+const gateCached = document.getElementById("gate-cached");
+const gateCachedInfo = document.getElementById("gate-cached-info");
+async function refreshGateCached() {
+  try {
+    const meta = await MdbCache.getMeta();
+    gateCached.hidden = !meta;
+    if (meta) gateCachedInfo.textContent = `📦 Cached copy: ${meta.name} — ${cacheLabel(meta)}`;
+  } catch { gateCached.hidden = true; }
+}
+document.getElementById("gate-use-cached").addEventListener("click", () => loadCached());
+document.getElementById("gate-forget").addEventListener("click", async () => {
+  try { await MdbCache.clear(); } catch { /* ignore */ }
+  gateCached.hidden = true;
+});
 
 gateDrop.addEventListener("click", () => gateFile.click());
 gateDrop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") gateFile.click(); });
@@ -895,6 +1027,9 @@ document.getElementById("db-change").addEventListener("click", () => {
   layout.hidden = true;
   dbBar.hidden = true;
   gate.hidden = false;
+  refreshGateCached();
 });
 
-// The gate is shown first; render() runs after a master.mdb is loaded.
+// Boot: auto-load the cached master.mdb if there is one; otherwise show the gate.
+// render() runs once a database is loaded (from cache or a fresh upload).
+loadCached();

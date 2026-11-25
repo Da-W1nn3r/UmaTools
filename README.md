@@ -46,8 +46,11 @@ The original `uma_master_browser` project served data from a FastAPI backend.
 Here the entire backend (wiki_service / generic_service / catalog / raw tables)
 is ported to JavaScript (`wiki.js`) and runs against sql.js in the tab:
 
-- The user drops/selects their `master.mdb`; it is read into memory only.
-- **Nothing is uploaded, persisted, or cached to disk.** Closing the tab clears it.
+- The user drops/selects their `master.mdb`; it is parsed locally by sql.js.
+- **Nothing is uploaded.** The file bytes are cached in IndexedDB so the database
+  survives closing the tab and auto-loads on the next visit. The header shows the
+  cached file's size, version (if the mdb carries a version table), file date and
+  cache date; the load gate offers "Use cached copy" / "Forget cached copy".
 - All previous features work: search + suggestions, trainees/characters/support
   cards/skills/races/items/NPCs/Team Trials builds, 16 generic categories,
   table catalog and the raw table browser.

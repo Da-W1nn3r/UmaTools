@@ -1,6 +1,7 @@
 /* Umamusume DB Wiki — client-side port of the Python backend.
  * Runs entirely in the browser against a user-supplied master.mdb via sql.js.
- * The file is never uploaded anywhere; it lives only in this tab's memory.
+ * The file is never uploaded anywhere; the app layer (app.js) caches the bytes
+ * in IndexedDB locally so the database survives closing the tab.
  * Constants (REGISTRY, PURPOSE, decoders…) are auto-generated in data.js.
  */
 (function (root) {

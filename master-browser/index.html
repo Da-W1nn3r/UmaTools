@@ -21,6 +21,10 @@
     #db-bar { display: flex; gap: 8px; align-items: center; margin-left: auto; font-size: .85em; }
     #db-bar button { cursor: pointer; }
     #db-name { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: .8; }
+    #db-meta { max-width: 360px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: .6; }
+    #gate-cached { margin-top: 14px; padding: 12px 14px; border: 1px solid var(--ut-muted); border-radius: 10px; }
+    #gate-cached p { margin: 0 0 8px; }
+    #gate-cached button { cursor: pointer; margin-right: 8px; }
   </style>
 </head>
 <body>
@@ -32,6 +36,7 @@
     </div>
     <div id="db-bar" hidden>
       <span id="db-name"></span>
+      <span id="db-meta"></span>
       <button id="db-change" class="tab" type="button">Load another file</button>
     </div>
   </header>
@@ -47,8 +52,14 @@
         <p>or click to choose the file</p>
         <input type="file" id="gate-file" accept=".mdb,application/octet-stream" hidden>
       </div>
-      <p class="privacy">🔒 Everything runs in this browser tab. Your file is <b>never uploaded</b> and is
-        not stored anywhere — it lives only in memory until you close or reload the page.</p>
+      <p class="privacy">🔒 Everything runs in this browser. Your file is <b>never uploaded</b>. A copy is
+        cached in this browser's local storage (IndexedDB) so it's still here when you close the tab and
+        come back — remove it anytime with “Forget cached copy”.</p>
+      <div id="gate-cached" hidden>
+        <p class="small" id="gate-cached-info"></p>
+        <button id="gate-use-cached" class="tab" type="button">Use cached copy</button>
+        <button id="gate-forget" class="tab" type="button">Forget cached copy</button>
+      </div>
       <div class="gate-status" id="gate-status"></div>
       <div class="gate-error" id="gate-error"></div>
       <p class="small muted">Tip: on Android the file lives under
