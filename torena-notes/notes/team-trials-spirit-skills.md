@@ -20,18 +20,17 @@ helps **everyone**), Competitive Spirit depends on style census, not skill censu
 
 ## 2. What the field looks like
 
-### NPC pools (6 NPCs drawn from a race-type pool of 10 builds)
+### NPC pools (6 NPCs drawn from a race-type pool of 8 builds)
 
 | Race type | Pool | Sympathy builds | Lone Wolf builds |
 | :--- | :--- | :--- | :--- |
-| Sprint | group 1 + 2 borrowed | 3/10 | **0** |
-| Mile / Dirt (shared) | group 2 + 2 borrowed | 3/10 | **0** |
-| Medium | group 3 + 2 borrowed | 4/10 | **3/10** |
-| Long | group 4 + 2 borrowed | 4/10 | **2/10** |
+| Sprint | group 1 (200001–200008) | 3/8 | **0** |
+| Mile / Dirt (shared) | group 2 (200009–200016) | 3/8 | **0** |
+| Medium | group 3 (200017–200024) | 3/8 | **3/8** |
+| Long | group 4 (200025–200032) | 3/8 | **2/8** |
 
-NPC style layout: 2 builds per style (Front/Pace/Late/End) in each core group of 8;
-the 2 borrowed builds' styles are not pinned down, modeled here as uniform over the
-4 styles. Draw modeled as 6 distinct builds uniformly from the 10 (hypergeometric).
+NPC style layout: exactly 2 builds per style (Front/Pace/Late/End) in each pool
+of 8. Draw modeled as 6 distinct builds uniformly from the 8 (hypergeometric).
 
 ### Player meta (per user)
 
@@ -47,8 +46,8 @@ the 2 borrowed builds' styles are not pinned down, modeled here as uniform over 
 | Race type | P(no NPC has Lone Wolf) = activation |
 | :--- | :--- |
 | Sprint, Mile, Dirt | **100%** — zero LW builds exist in these pools |
-| Medium | C(7,6)/C(10,6) = **3.3%** |
-| Long | C(8,6)/C(10,6) = **13.3%** |
+| Medium | **0%** — only 5 non-LW builds exist, so a 6-draw always includes ≥1 LW NPC |
+| Long | C(6,6)/C(8,6) = 1/28 = **3.6%** |
 
 ### Considering the opponent
 
@@ -58,57 +57,60 @@ the 2 borrowed builds' styles are not pinned down, modeled here as uniform over 
 - If a second player holder appears, the skill dies for *both* — it is a
   mutual-denial trap in a mirror matchup, but you can't be denied by NPCs there.
 - In **Medium/Long it is a trap regardless of the opponent**: NPCs alone kill it
-  96.7% / 86.7% of the time. Even one LW NPC in the field invalidates your 129 pt.
+  100% / 96.4% of the time. In Medium it can *never* activate.
 
 **Verdict:** strong, cheap, near-unconditional green in Sprint/Mile/Dirt;
-near-dead weight in Medium/Long. Its risk scales with future popularity, not with
-NPC randomness, in the short/mile/dirt pools.
+dead weight in Medium/Long (literally 0% in Medium). Its risk scales with future
+popularity, not with NPC randomness, in the short/mile/dirt pools.
 
 ## 4. Sympathy
 
-Needs ≥5 holders total. NPC maximum is 3 (Sprint/Mile/Dirt) or 4 (Medium/Long),
-so **NPCs alone can never activate it** — player copies are mandatory.
+Needs ≥5 holders total. NPC maximum is 3 in every pool, so **NPCs alone can never
+activate it** — player copies are mandatory. And because only 5 builds in each
+pool lack Sympathy, a 6-draw **always includes at least one** Sympathy NPC.
 
-NPC Sympathy count distribution (6 drawn from pool):
+NPC Sympathy count distribution (6 drawn from pool of 8, identical for every
+race type):
 
-| NPC holders | 0 | 1 | 2 | 3 | 4 |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Sprint/Mile/Dirt (3 in pool) | 3.3% | 30.0% | 50.0% | 16.7% | — |
-| Medium/Long (4 in pool) | 0.5% | 11.4% | 42.9% | 38.1% | 7.1% |
+| NPC holders | 0 | 1 | 2 | 3 |
+| :--- | :--- | :--- | :--- | :--- |
+| All race types (3 in pool) | **0%** | 10.7% | 53.6% | 35.7% |
 
 ### Independent of the opponent (opponent runs 0 — current meta)
 
-| Your copies | Sprint / Mile / Dirt | Medium / Long |
-| :--- | :--- | :--- |
-| 1 | **0%** (needs 4 NPCs, max 3) | 7.1% |
-| 2 | 16.7% | 45.2% |
-| 3 (whole team) | **66.7%** | **88.1%** |
+| Your copies | Activation (all race types) |
+| :--- | :--- |
+| 1 | **0%** (needs 4 NPCs, max 3) |
+| 2 | 35.7% |
+| 3 (whole team) | **89.3%** |
 
 ### Considering the opponent
 
 - Sympathy has **positive cross-team externality**: opponent copies count toward
   your threshold too. If the opponent also commits 3 copies, 3+3 = 6 ≥ 5 →
   **100% activation for both teams, every race, NPC-independent**.
-- Mixed adoption helps too: your 2 + opponent 1 already reaches the same
-  66.7% / 88.1% as a full solo commit; your 1 + opponent 2 likewise.
+- Even **one** opponent copy completes a full-team commit: your 3 + their 1 = 4,
+  and the draw guarantees ≥1 Sympathy NPC → **100% activation**.
+- Mixed adoption helps too: your 2 + opponent 1 already reaches the same 89.3%
+  as a full solo commit; your 1 + opponent 2 likewise.
 - There is no denial scenario — more adopters strictly improves everyone's
   activation. It is the opposite of Lone Wolf.
 
 **Verdict:** a 387 pt team-wide investment that pays +40 Speed to all three umas
-~2/3 of the time (Sprint/Mile/Dirt) or ~88% (Medium/Long) today, and becomes
-guaranteed if the meta co-adopts. One lone copy is essentially useless
-(0–7%). Medium/Long is the best habitat thanks to the 4th Sympathy NPC build.
+in ~89% of races today — equally in every race type — and becomes guaranteed if
+the opponent runs even a single copy. One lone copy is useless (0%).
 
 ## 5. Competitive Spirit
 
 Needs ≥5 of 12 in your style (holder included). NPC style census per fixed style
-(2 core builds + 2 borrowed modeled uniform), 6 drawn:
+(exactly 2 builds of each style in the pool of 8), 6 drawn:
 
-| NPC count of your style | 0 | 1 | 2 | 3 | 4 |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Probability | 8.8% | 42.0% | 40.2% | 8.6% | 0.45% |
+| NPC count of your style | 0 | 1 | 2 |
+| :--- | :--- | :--- | :--- |
+| Probability | 3.6% | 42.9% | 53.6% |
 
-NPCs contribute on average only **1.5** runners of your style; 4+ is a ~0.4% tail.
+NPCs contribute on average only **1.5** runners of your style — and can never
+contribute more than 2.
 
 ### Activation probability by team composition
 
@@ -116,20 +118,20 @@ Opponent modeled as style-diverse (3 distinct styles ⇒ 75% chance one matches 
 
 | Your team's copies of the style | Independent of opponent (need 5 from your 3 + 6 NPCs) | With style-diverse opponent |
 | :--- | :--- | :--- |
-| 1 (fully diverse team — the meta) | **0.45%** | **6.9%** |
-| 2 (partial stack) | 9.1% | 39.2% |
-| 3 (full stack) | 49.3% | 80.7% |
+| 1 (fully diverse team — the meta) | **0%** | **0%** (needs ≥3 NPC matches; max 2) |
+| 2 (partial stack) | 0% | 40.2% |
+| 3 (full stack) | 53.6% | 85.7% |
 
 ### Reading
 
 - Under the point-maximising meta (both teams style-diverse), Competitive Spirit
-  is **effectively dead**: <1% ignoring the opponent, ~7% even crediting the
-  opponent's likely single style match. The 129/174 pt buys +40/+60 **Power**
-  (not Speed) that almost never turns on.
+  is **literally dead**: 0% even crediting the opponent's likely single style
+  match — the census can't reach 5 when NPCs cap at 2 of your style. The
+  129/174 pt buys +40/+60 **Power** (not Speed) that never turns on.
 - Making it work requires **style stacking**, which directly fights the
   style-diversity scoring the meta is built around — you'd sacrifice reliable
   score bonuses for a coin-flip green. Only a full 3-stack + opponent match
-  (~81%) approaches reliability, and that composition is self-defeating in TT.
+  (~86%) approaches reliability, and that composition is self-defeating in TT.
 - Ironically the NPC templates themselves carry Competitive Spirit ○
   (sets 200004, 200013, 200020, 200029) — it rarely activates for them either.
 
@@ -137,15 +139,15 @@ Opponent modeled as style-diverse (3 distinct styles ⇒ 75% chance one matches 
 
 | Skill | Sprint | Mile / Dirt | Medium | Long | Opponent interaction |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Lone Wolf | ~100% | ~100% | 3.3% | 13.3% | Mutual denial (mirror kills both) |
-| Sympathy ×3 team | 66.7% | 66.7% | 88.1% | 88.1% | Mutual benefit (co-adoption → 100%) |
-| Competitive Spirit (diverse team) | ~0.4–7% | ~0.4–7% | ~0.4–7% | ~0.4–7% | Opponent style match adds a few % |
+| Lone Wolf | ~100% | ~100% | **0%** | 3.6% | Mutual denial (mirror kills both) |
+| Sympathy ×3 team | 89.3% | 89.3% | 89.3% | 89.3% | Mutual benefit (any co-adoption → 100%) |
+| Competitive Spirit (diverse team) | **0%** | **0%** | **0%** | **0%** | Even an opponent style match can't save it |
 
 - **Lone Wolf**: best-in-slot cheap green for Sprint/Mile/Dirt at current low
-  adoption; avoid in Medium/Long. Watch the meta — popularity is its only counter
-  in short/mile/dirt.
-- **Sympathy**: viable only as a full-team commit; solid in Medium/Long, decent
-  elsewhere, and it *improves* as more players adopt it. Never run a single copy.
+  adoption; avoid in Medium/Long entirely. Watch the meta — popularity is its
+  only counter in short/mile/dirt.
+- **Sympathy**: viable only as a full-team commit; a uniform ~89% in every race
+  type, and it *improves* as more players adopt it. Never run a single copy.
 - **Competitive Spirit**: structurally incompatible with Team Trials'
   style-diversity incentives; skip it (and Maverick, its inverse, suffers the
   same census problem in reverse — with diverse teams and 6 style-spread NPCs,
@@ -161,72 +163,68 @@ below use the current meta (opponent ≈ 0 adoption) unless stated.
 
 | Configuration | Sprint / Mile / Dirt | Medium | Long |
 | :--- | :--- | :--- | :--- |
-| Lone Wolf ×1 | **500.0** | 16.7 | 66.7 |
+| Lone Wolf ×1 | **500.0** | **0.0** | 17.9 |
 | Lone Wolf ×2 or ×3 | **0** (self-denial: count ≥ 2 kills it for all holders) | 0 | 0 |
-| Sympathy ×1 | 0.0 | 35.7 | 35.7 |
-| Sympathy ×2 | 166.7 | 452.4 | 452.4 |
-| Sympathy ×3 | **1000.0** | **1321.4** | **1321.4** |
-| Competitive Spirit ×1 (diverse team) | 2.2 (34.6 w/ opp style match) | same | same |
-| Competitive Spirit ×3, diverse styles | 6.7 (103.8 w/ opp) | same | same |
-| Competitive Spirit ×3, stacked style | 738.8 (1210.9 w/ opp) | same | same |
-| **Sympathy ×3 + Lone Wolf ×1** | **1500.0** | **1338.1** | **1388.1** |
+| Sympathy ×1 | 0.0 | 0.0 | 0.0 |
+| Sympathy ×2 | 357.1 | 357.1 | 357.1 |
+| Sympathy ×3 | **1339.3** | **1339.3** | **1339.3** |
+| Competitive Spirit ×1 (diverse team) | 0.0 | 0.0 | 0.0 |
+| Competitive Spirit ×3, diverse styles | 0.0 | 0.0 | 0.0 |
+| Competitive Spirit ×3, stacked style | 803.6 (1285.7 w/ opp style match) | same | same |
+| **Sympathy ×3 + Lone Wolf ×1** | **1839.3** | **1339.3** | **1357.1** |
 
 ### Why these are the optimal picks
 
 1. **Lone Wolf: exactly one copy, never more.** A second copy on your own team
    sets `same_skill_horse_count = 2` and scores 0 for both. One copy in
    Sprint/Mile/Dirt is a near-constant **+500 pt every race** — the single most
-   reliable activation of the three skills. In Medium/Long its EV (16.7 / 66.7)
-   is negligible; don't bother.
+   reliable activation of the three skills. In Medium its EV is exactly 0 and
+   in Long only 17.9; don't bother.
 2. **Sympathy is superlinear — always run 3 or 0.** The third copy doesn't just
    add its own 500 × P; it raises P for the other two copies as well. Marginal
-   value of the 3rd copy: **833 pt** (Sprint/Mile/Dirt, 166.7 → 1000) and
-   **869 pt** (Medium/Long, 452.4 → 1321.4). A single copy is worth 0–36 pt:
-   never run 1 or 2.
+   value of the 3rd copy: **982 pt** (357.1 → 1339.3, in every race type).
+   A single copy is worth 0 pt: never run 1, and 2 is weak value too.
 3. **The two skills stack.** They census different things (skill counts are
    independent), so one uma can carry both Sympathy and Lone Wolf and double-dip
    1000 pt when both fire. Best per-race loadout:
-   - Sprint / Mile / Dirt: **Sympathy ×3 + LW ×1 → EV 1500 pt** (max possible 2000)
-   - Medium: **Sympathy ×3 (+ LW ×1) → EV 1338 pt**
-   - Long: **Sympathy ×3 (+ LW ×1) → EV 1388 pt**
-   - Full 5-race TT round (Sprint, Mile, Medium, Long, Dirt): **≈ 7226 expected pt**
+   - Sprint / Mile / Dirt: **Sympathy ×3 + LW ×1 → EV 1839 pt** (max possible 2000)
+   - Medium: **Sympathy ×3 → EV 1339 pt** (LW can never fire — leave it off)
+   - Long: **Sympathy ×3 (+ LW ×1) → EV 1357 pt**
+   - Full 5-race TT round (Sprint, Mile, Medium, Long, Dirt): **≈ 8214 expected pt**
      from these skills alone, vs 0 for the current no-adoption meta.
 4. **Competitive Spirit loses even when you cheat for it.** Its best case —
-   all 3 umas stacked in one style with CS — yields 739 pt (1211 crediting the
-   opponent's style match), still below Sympathy ×3's 1000–1321, *and* it
-   forfeits the style-diversity scoring that motivated spreading styles in the
-   first place. Under the diverse-team meta it is worth 2–35 pt: skip entirely.
+   all 3 umas stacked in one style with CS — yields 804 pt (1286 crediting the
+   opponent's style match), still below Sympathy ×3's 1339, *and* it forfeits
+   the style-diversity scoring that motivated spreading styles in the first
+   place. Under the diverse-team meta it is worth exactly 0 pt: skip entirely.
 
 ### Consistency vs expectation
 
-Sympathy is all-or-nothing per race (all 3 copies fire together): Sprint/Mile/Dirt
-payes 1500 pt in 2/3 of races and 0 in 1/3; Medium/Long pays 1500 in 88% of races.
-Lone Wolf is the opposite — a steady 500. If total points across many races is the
-goal, EV is the right metric and the combo wins; Medium/Long is also the lowest-
-variance place to commit Sympathy.
+Sympathy is all-or-nothing per race (all 3 copies fire together): it pays
+1500 pt in ~89% of races and 0 in ~11%, identically in every race type. Lone
+Wolf is the opposite — a steady 500 in Sprint/Mile/Dirt, nothing in Medium.
+If total points across many races is the goal, EV is the right metric and the
+combo wins; no race type is a better or worse habitat for Sympathy than another.
 
 ### Meta dynamics (opponent adoption)
 
 - **Sympathy is coordination-positive**: opponent copies count toward your 5.
-  Opponent runs 1 → your EV rises to 1450 (Sprint/Mile/Dirt, needs ≥1 NPC,
-  96.7%) / 1493 (Medium/Long). Opponent runs 3 → **guaranteed 1500 pt**.
-  Adoption can only help you.
+  Opponent runs just 1 → your EV is a **guaranteed 1500 pt** (your 3 + their 1
+  = 4, and the draw guarantees ≥1 Sympathy NPC). Adoption can only help you.
 - **Lone Wolf is anti-coordination**: if the opponent mirrors it, both score 0.
   EV = 500 × (1 − P(opponent runs LW)). At today's near-zero adoption it's free
   money; if the meta catches on, expect this 500 to erode — it's the fragile
   half of the combo, while Sympathy is the robust half.
-- Competitive Spirit gains a little from opponent style matches but never
-  enough to matter.
+- Competitive Spirit gains nothing from opponent style matches under the
+  diverse-team meta — the census still can't reach 5.
 
 ## Caveats / assumptions
 
 1. `running_style_count_same_rate>=40` interpreted as holders-inclusive share of
    the full field (5/12). If the game excludes the holder, the threshold becomes
    6/12 and Competitive Spirit is even worse.
-2. 6 NPCs modeled as distinct uniform draws from the 10-build pool; server-side
+2. 6 NPCs modeled as distinct uniform draws from the 8-build pool; server-side
    generation is not in the master DB.
-3. The 2 borrowed builds per pool have unknown styles; modeled uniform over the
-   4 styles. Core-pool-only figures shift the CS numbers by only a few points.
-4. "Opponent ≈ 0 adoption" reflects the current meta per user observation;
+3. "Opponent ≈ 0 adoption" reflects the current meta per user observation;
    Lone Wolf and Sympathy probabilities move in opposite directions as adoption
    grows.
