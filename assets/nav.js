@@ -14,6 +14,7 @@
     ["umatree", "🌳 UmaTree"],
     ["tt-tracker", "🤖 Team Trials"],
     ["master-browser", "🗄️ Master Browser"],
+    ["torena-notes", "📝 Torena's Notes"],
   ];
 
   // Which tool are we in? (folder name appears in the page path)

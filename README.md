@@ -1,6 +1,7 @@
 # Da_'s UmaTools — static website
 
-A single static site bundling five Umamusume: Pretty Derby companion tools.
+A single static site bundling five Umamusume: Pretty Derby companion tools
+plus Torena's Notes, a section for published game insights.
 No backend, no build step, no uploads — everything runs in the browser.
 
 ## Layout
@@ -18,12 +19,22 @@ site/
 ├── completionist/        Completionist Tracker — trophy progress + screenshot scanning
 ├── umatree/              UmaTree — roster, inheritance loops, run simulator
 ├── tt-tracker/           Uma Team Trials Tracker — performance ratings to spot & replace underperformers
-└── master-browser/       Master Browser — wiki over a user-supplied master.mdb
-    ├── vendor/           sql.js (SQLite compiled to WebAssembly)
-    ├── data.js           Decoder/catalog constants (generated from the Python backend)
-    ├── wiki.js           Client-side port of the FastAPI wiki/generic/catalog services
-    └── app.js            SPA UI (unchanged apart from the local API + file-load gate)
+├── master-browser/       Master Browser — wiki over a user-supplied master.mdb
+│   ├── vendor/           sql.js (SQLite compiled to WebAssembly)
+│   ├── data.js           Decoder/catalog constants (generated from the Python backend)
+│   ├── wiki.js           Client-side port of the FastAPI wiki/generic/catalog services
+│   └── app.js            SPA UI (unchanged apart from the local API + file-load gate)
+└── torena-notes/         Torena's Notes — published insights into the game
+    ├── notes/            One .md file per note (rendered client-side)
+    └── app.js            Note index (NOTES array) + minimal markdown renderer
 ```
+
+## Publishing a Torena's note
+
+1. Drop the markdown file into `torena-notes/notes/`.
+2. Add an entry to the `NOTES` array at the top of `torena-notes/app.js`
+   (id, file, title, tag, date, summary). It appears on the notes index
+   and is readable at `torena-notes/index.html#<id>`.
 
 ## Shared design system
 
