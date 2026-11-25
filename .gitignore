@@ -1,0 +1,17 @@
+# Dependencies / caches / logs
+node_modules/
+__pycache__/
+*.pyc
+*.log
+
+# Editor / AI session state
+.vscode/
+.qwen/
+
+# Raw Cygames game data (users load their own at runtime; never committed)
+*.mdb
+
+# Windows artifacts
+nul
+Thumbs.db
+desktop.ini
