@@ -130,7 +130,7 @@ const DB = {
   },
   async restoreBackup(obj) {
     if (!obj || obj.format !== "uma_tree_backup" || !Array.isArray(obj.veterans) || !obj.user)
-      throw new Error("Not an Uma Tree backup file");
+      throw new Error("Not an UmaTree backup file");
     await importVeterans(obj.veterans, S.cat);
     this.user = obj.user;
     this.user.white_presets ||= [];

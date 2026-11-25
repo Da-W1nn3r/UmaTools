@@ -11,7 +11,7 @@
   const TOOLS = [
     ["eyeuma", "👁️ EyeUma"],
     ["completionist", "🏆 Completionist"],
-    ["umatree", "🌳 Uma Tree"],
+    ["umatree", "🌳 UmaTree"],
     ["tt-tracker", "🤖 Team Trials"],
     ["master-browser", "🗄️ Master Browser"],
   ];
@@ -28,10 +28,10 @@
   nav.className = "ut-nav";
   nav.setAttribute("aria-label", "UmaTools");
   nav.innerHTML =
-    `<a class="ut-brand" href="${root}index.html">🏇 Da_'s <span>UmaTools</span></a>` +
+    `<a class="ut-brand" href="${root}index.html"><img src="${root}assets/machan_time.svg" alt="">Da_'s <span>UmaTools</span></a>` +
     `<div class="ut-links">` +
     TOOLS.map(([folder, label]) =>
-      `<a href="${root}${folder}/index.html"${folder === active ? ' class="active" aria-current="page"' : ""}>${label}</a>`
+      `<a href="${root}${folder}/index.html" data-label="${label}"${folder === active ? ' class="active" aria-current="page"' : ""}>${label}</a>`
     ).join("") +
     `</div>`;
   document.body.insertBefore(nav, document.body.firstChild);

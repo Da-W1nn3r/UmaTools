@@ -110,7 +110,7 @@ function route() {
     $$("#nav a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#/" + path));
   }
   if (!Engine.roster.length && path !== "manage" && path !== "objectives") {
-    $("#main").innerHTML = `<div class="panel"><h2>Welcome to Uma Tree 🌳</h2>
+    $("#main").innerHTML = `<div class="panel"><h2>Welcome to UmaTree 🌳</h2>
       <p>Import your <code>trained_chara_data.json</code> to get started. It is parsed and stored in your browser only — nothing is uploaded.</p>
       <ol class="small muted">
         <li>Extract your game data with <a href="https://werseter.github.io/umadump/" target="_blank" rel="noopener">UmaDump ↗</a>

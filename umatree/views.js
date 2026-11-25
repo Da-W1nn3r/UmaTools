@@ -14,7 +14,7 @@ ROUTES.manage = function () {
       <h3 style="margin-top:0">Import — drop ALL extractor files at once</h3>
       <p class="small muted">Drop the files <a href="https://werseter.github.io/umadump/" target="_blank" rel="noopener">UmaDump ↗</a> produced.
       Recognised automatically: <code>trained_chara_data.json</code> → veterans · <code>card_data.json</code> → your owned umas (target picker) ·
-      an Uma Tree backup → full restore. Other files are reported and skipped. Everything is parsed in your browser
+      an UmaTree backup → full restore. Other files are reported and skipped. Everything is parsed in your browser
       and stored locally (IndexedDB) — nothing is uploaded.</p>
       ${gameFilesHelp()}
       <details class="small muted"><summary>How re-imports merge</summary>
@@ -195,7 +195,7 @@ ROUTES.manage = function () {
     DB.db.close();   // deleteDatabase is blocked while a connection is open
     const req = indexedDB.deleteDatabase("uma_tree");
     req.onsuccess = req.onerror = () => location.reload();
-    req.onblocked = () => alert("Another Uma Tree tab is holding the database open — close it and try again.");
+    req.onblocked = () => alert("Another UmaTree tab is holding the database open — close it and try again.");
   };
   const renderPrune = () => {
     const rows = Engine.pruneRank($("#showkept").checked);

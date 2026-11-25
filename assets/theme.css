@@ -70,7 +70,9 @@
 }
 
 /* ---- Base ---- */
+html { scrollbar-gutter: stable; }
 body {
+  margin: 0;
   background: var(--ut-bg);
   color: var(--ut-ink);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -85,15 +87,18 @@ body {
 .ut-nav {
   position: sticky; top: 0; z-index: 90;
   height: var(--ut-nav-h);
-  display: flex; align-items: center; gap: 14px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: nowrap; overflow: visible;
   padding: 0 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   background: #1d1a16;
   border-bottom: 1px solid var(--ut-line);
 }
 .ut-brand {
+  display: inline-flex; align-items: center; gap: 7px;
   font-weight: 700; font-size: 15px; white-space: nowrap;
   color: var(--ut-ink); text-decoration: none;
 }
+.ut-brand img { height: 24px; width: auto; aspect-ratio: 92.759 / 101.55; display: block; }
 .ut-brand:hover { text-decoration: none; }
 .ut-brand span { color: var(--ut-accent); }
 .ut-links {
@@ -105,6 +110,12 @@ body {
   color: var(--ut-muted); text-decoration: none;
   padding: 6px 12px; border-radius: 999px;
   font-size: 13.5px; font-weight: 500; white-space: nowrap;
+}
+/* Reserve the bold (active) text width so switching tabs never shifts the row */
+.ut-links a::after {
+  content: attr(data-label);
+  display: block; height: 0; overflow: hidden;
+  font-weight: 600; visibility: hidden; pointer-events: none;
 }
 .ut-links a:hover { color: var(--ut-ink); background: var(--ut-panel2); text-decoration: none; }
 .ut-links a.active { background: var(--ut-accent); color: var(--ut-accent-ink); font-weight: 600; }
@@ -151,7 +162,7 @@ body[data-tool="completionist"] .controls { margin: 16px 16px 16px; border-radiu
 body[data-tool="completionist"] #app { margin: 0 16px 16px; }
 
 /* ============================================================
-   Uma Tree
+   UmaTree
    ============================================================ */
 body[data-tool="umatree"] header { position: sticky; top: var(--ut-nav-h); padding: 10px 20px; }
 body[data-tool="umatree"] nav a.active { color: var(--ut-accent-ink); }
