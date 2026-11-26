@@ -10,9 +10,9 @@
 
   const TOOLS = [
     ["eyeuma", "👁️ EyeUma"],
-    ["completionist", "🏆 Completionist"],
+    ["completionist", "<img src=\"%ASSETS%KingHalo_channel_style.svg\" alt=\"\" class=\"ut-ico\"> Completionist", "🏆 Completionist"],
     ["umatree", "🌳 UmaTree"],
-    ["tt-tracker", "🤖 Team Trials"],
+    ["tt-tracker", "<img src=\"%ASSETS%nice-nature-clean.svg\" alt=\"\" class=\"ut-ico ut-ico-wide\"> Team Trials", "🤖 Team Trials"],
     ["master-browser", "🗄️ Master Browser"],
     ["torena-notes", "📝 Torena's Notes"],
   ];
@@ -31,8 +31,8 @@
   nav.innerHTML =
     `<a class="ut-brand" href="${root}index.html"><img src="${root}assets/machan_time.svg" alt="">Da_'s <span>UmaTools</span></a>` +
     `<div class="ut-links">` +
-    TOOLS.map(([folder, label]) =>
-      `<a href="${root}${folder}/index.html" data-label="${label}"${folder === active ? ' class="active" aria-current="page"' : ""}>${label}</a>`
+    TOOLS.map(([folder, label, textLabel]) =>
+      `<a href="${root}${folder}/index.html" data-label="${textLabel || label}"${folder === active ? ' class="active" aria-current="page"' : ""}>${label.replace("%ASSETS%", root + "assets/")}</a>`
     ).join("") +
     `</div>`;
   document.body.insertBefore(nav, document.body.firstChild);

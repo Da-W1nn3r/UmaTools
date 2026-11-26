@@ -13,7 +13,7 @@
     .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px 60px; }
     header.hero { text-align: center; padding: 48px 0 26px; }
     .hero .logo { display: flex; justify-content: center; line-height: 1; }
-    .hero .logo img { height: 120px; width: auto; aspect-ratio: 76.951 / 89.957; filter: drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+    .hero .logo img { height: 120px; width: auto; aspect-ratio: 89.35 / 63.61; filter: drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
     .hero h1 { margin: 12px 0 6px; font-size: 2.1rem; letter-spacing: -.02em; }
     .hero h1 span { color: var(--ut-accent); }
     .hero p { margin: 0 auto; max-width: 620px; color: var(--ut-muted); }
@@ -31,7 +31,8 @@
       transition: transform .12s ease, border-color .12s ease;
     }
     a.card:hover { transform: translateY(-3px); border-color: var(--ut-accent); }
-    .card .icon { font-size: 34px; }
+    .card .icon { font-size: 34px; min-height: 40px; display: flex; align-items: center; }
+    .card .icon img { height: 40px; width: auto; }
     .card h2 { margin: 0; font-size: 1.2rem; }
     .card .tag { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ut-accent); }
     .card p { margin: 0; color: var(--ut-muted); font-size: .93rem; flex: 1; }
@@ -48,7 +49,7 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <div class="logo"><img src="assets/KingHalo_channel_style.svg" alt="King Halo mascot"></div>
+      <div class="logo"><img src="assets/nice-nature-clean.svg" alt="Nice Nature mascot"></div>
       <h1>Da_'s <span>UmaTools</span></h1>
       <p>Your companion toolkit for <b>Umamusume: Pretty Derby</b> — Celebrating Nice Nature November!</p>
       <div class="privacy-banner">🔒 Everything runs in your browser. No accounts, no uploads — your
@@ -69,7 +70,7 @@
       </a>
 
       <a class="card" href="completionist/index.html">
-        <div class="icon">🏆</div>
+        <div class="icon"><img src="assets/KingHalo_channel_style.svg" alt="King Halo"></div>
         <div class="tag">Trophy hunting</div>
         <h2>Completionist Tracker</h2>
         <p>Going for every trophy? See exactly which races you've won and which ones are still
@@ -91,7 +92,7 @@
       </a>
 
       <a class="card" href="tt-tracker/index.html">
-        <div class="icon">🤖</div>
+        <div class="icon"><img src="assets/nice-nature-clean.svg" alt="Nice Nature"></div>
         <div class="tag">Team Trials</div>
         <h2>Uma Team Trials Tracker</h2>
         <p>Find the weak links in your Team Trials lineup. Log each round's top and bottom
