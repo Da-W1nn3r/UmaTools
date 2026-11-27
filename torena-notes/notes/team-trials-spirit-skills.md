@@ -1,8 +1,17 @@
 # Team Trials report: Competitive Spirit, Lone Wolf & Sympathy
 
+Author: Da_W1nn3r
+
+Published: 10/26/2026
+
+Updated: 11/26/2026
+
+
 Scope: Team Trials (Team Stadium) races — **12 runners = 3 of your team + 3 opponent
 + 6 NPC bots**. Source: the game's `master.mdb` (`skill_data`, `skill_set`
 200001–200032); NPC pool structure verified in-game.
+
+Assumptions: We are working with base value with no forms of scaling to the points such as wins or support card bonuses. We also do not factor their effectiveness at winning team trial races. 
 
 ## 1. Skill mechanics (from `skill_data`)
 
@@ -16,7 +25,7 @@ Scope: Team Trials (Team Stadium) races — **12 runners = 3 of your team + 3 op
 All are green (passive) skills, active for the whole race (`float_ability_time = -1`).
 Note the asymmetry: Lone Wolf is a *denial* skill (any second holder kills it for
 **everyone**), Sympathy is a *coop* skill (any holder — including the opponent's —
-helps **everyone**), Competitive Spirit depends on style census, not skill census.
+helps **everyone**), Competitive Spirit depends on style census.
 
 ## 2. What the field looks like
 
@@ -29,12 +38,12 @@ helps **everyone**), Competitive Spirit depends on style census, not skill censu
 | Medium | group 3 (200017–200024) | 3/8 | **3/8** |
 | Long | group 4 (200025–200032) | 3/8 | **2/8** |
 
-NPC style layout: exactly 2 builds per style (Front/Pace/Late/End) in each pool
-of 8. Draw modeled as 6 distinct builds uniformly from the 8 (hypergeometric).
+NPC style pool: exactly 2 builds per style (Front/Pace/Late/End) in each pool
+of 8. Draw is modeled as 6 distinct builds uniformly from the 8. 
 
 ### Player meta (per user)
 
-- Both teams spread their 3 umas across **different running styles** to maximise
+- We expect both player teams spread their 3 umas across **different running styles** to maximise
   style-coverage points → at most 1–2 of any given style per player team.
 - **Almost no players currently run these three skills** → opponent contribution
   ≈ 0 in the baseline case.
@@ -45,22 +54,22 @@ of 8. Draw modeled as 6 distinct builds uniformly from the 8 (hypergeometric).
 
 | Race type | P(no NPC has Lone Wolf) = activation |
 | :--- | :--- |
-| Sprint, Mile, Dirt | **100%** — zero LW builds exist in these pools |
-| Medium | **0%** — only 5 non-LW builds exist, so a 6-draw always includes ≥1 LW NPC |
+| Sprint, Mile, Dirt | **100%** — zero Lone Wolf builds exist in these pools |
+| Medium | **0%** — only 5 non-Lone Wolf builds exist, so a 6-draw always includes ≥1 Lone Wolf NPC |
 | Long | C(6,6)/C(8,6) = 1/28 = **3.6%** |
 
 ### Considering the opponent
 
 - The only remaining failure mode in Sprint/Mile/Dirt is the opponent mirroring
   Lone Wolf. At current (near-zero) adoption this is negligible → **Lone Wolf is
-  effectively a guaranteed +40 Speed green for 129 pt in Sprint, Mile and Dirt.**
+  effectively a guaranteed +40 Speed green and 500 pts for 70 sp in Sprint, Mile and Dirt.**
 - If a second player holder appears, the skill dies for *both* — it is a
   mutual-denial trap in a mirror matchup, but you can't be denied by NPCs there.
 - In **Medium/Long it is a trap regardless of the opponent**: NPCs alone kill it
   100% / 96.4% of the time. In Medium it can *never* activate.
 
 **Verdict:** strong, cheap, near-unconditional green in Sprint/Mile/Dirt;
-dead weight in Medium/Long (literally 0% in Medium). Its risk scales with future
+a very poor skill in Medium/Long (literally 0% in Medium). Its risk scales with future
 popularity, not with NPC randomness, in the short/mile/dirt pools.
 
 ## 4. Sympathy
@@ -187,9 +196,9 @@ below use the current meta (opponent ≈ 0 adoption) unless stated.
 3. **The two skills stack.** They census different things (skill counts are
    independent), so one uma can carry both Sympathy and Lone Wolf and double-dip
    1000 pt when both fire. Best per-race loadout:
-   - Sprint / Mile / Dirt: **Sympathy ×3 + LW ×1 → EV 1839 pt** (max possible 2000)
-   - Medium: **Sympathy ×3 → EV 1339 pt** (LW can never fire — leave it off)
-   - Long: **Sympathy ×3 (+ LW ×1) → EV 1357 pt**
+   - Sprint / Mile / Dirt: **Sympathy ×3 + Lone Wolf ×1 → EV 1839 pt** (max possible 2000)
+   - Medium: **Sympathy ×3 → EV 1339 pt** (Lone Wolf can never fire — leave it off)
+   - Long: **Sympathy ×3 (+ Lone Wolf ×1) → EV 1357 pt**
    - Full 5-race TT round (Sprint, Mile, Medium, Long, Dirt): **≈ 8214 expected pt**
      from these skills alone, vs 0 for the current no-adoption meta.
 4. **Competitive Spirit loses even when you cheat for it.** Its best case —
@@ -212,7 +221,7 @@ combo wins; no race type is a better or worse habitat for Sympathy than another.
   Opponent runs just 1 → your EV is a **guaranteed 1500 pt** (your 3 + their 1
   = 4, and the draw guarantees ≥1 Sympathy NPC). Adoption can only help you.
 - **Lone Wolf is anti-coordination**: if the opponent mirrors it, both score 0.
-  EV = 500 × (1 − P(opponent runs LW)). At today's near-zero adoption it's free
+  EV = 500 × (1 − P(opponent runs Lone Wolf)). At today's near-zero adoption it's free
   money; if the meta catches on, expect this 500 to erode — it's the fragile
   half of the combo, while Sympathy is the robust half.
 - Competitive Spirit gains nothing from opponent style matches under the
@@ -220,11 +229,8 @@ combo wins; no race type is a better or worse habitat for Sympathy than another.
 
 ## Caveats / assumptions
 
-1. `running_style_count_same_rate>=40` interpreted as holders-inclusive share of
-   the full field (5/12). If the game excludes the holder, the threshold becomes
-   6/12 and Competitive Spirit is even worse.
-2. 6 NPCs modeled as distinct uniform draws from the 8-build pool; server-side
-   generation is not in the master DB.
-3. "Opponent ≈ 0 adoption" reflects the current meta per user observation;
+1. 6 NPCs modeled as distinct uniform draws from the 8-build pool; server-side
+   generation is not in the master DB. This may change when new updates get introduced.
+2. "Opponent ≈ 0 adoption" reflects the meta per user observation at time of update;
    Lone Wolf and Sympathy probabilities move in opposite directions as adoption
    grows.

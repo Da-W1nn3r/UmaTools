@@ -22,7 +22,7 @@
   --ut-warn: #e2c46a;
   --ut-ok: #6cd98b;
   --ut-radius: 12px;
-  --ut-nav-h: 52px;
+  --ut-nav-h: 78px;    /* sticky offsets everywhere read this variable */
   --ut-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 6px 24px rgba(0, 0, 0, .3);
 
   /* ---- Map every tool's variable names onto the tokens ---- */
@@ -87,29 +87,29 @@ body {
 .ut-nav {
   position: sticky; top: 0; z-index: 90;
   height: var(--ut-nav-h);
-  display: flex; align-items: center; gap: 14px; flex-wrap: nowrap; overflow: visible;
-  padding: 0 16px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: nowrap; overflow: visible;
+  padding: 0 24px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   background: #1d1a16;
   border-bottom: 1px solid var(--ut-line);
 }
 .ut-brand {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-weight: 700; font-size: 15px; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 22px; white-space: nowrap;
   color: var(--ut-ink); text-decoration: none;
 }
-.ut-brand img { height: 24px; width: auto; aspect-ratio: 92.759 / 101.55; display: block; }
+.ut-brand img { height: 36px; width: auto; aspect-ratio: 92.759 / 101.55; display: block; }
 .ut-brand:hover { text-decoration: none; }
 .ut-brand span { color: var(--ut-accent); }
 .ut-links {
-  display: flex; gap: 4px; flex: 1; min-width: 0; position: relative;
-  overflow-x: auto; scrollbar-width: none;
+  display: flex; gap: 6px; flex: 1; min-width: 0; position: relative;
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
 }
 .ut-links::-webkit-scrollbar { display: none; }
 .ut-links a {
   color: var(--ut-muted); text-decoration: none;
-  padding: 6px 12px; border-radius: 999px;
-  font-size: 13.5px; font-weight: 500; white-space: nowrap;
+  padding: 9px 18px; border-radius: 999px;
+  font-size: 20px; font-weight: 500; white-space: nowrap;
 }
 /* Reserve the bold (active) text width so switching tabs never shifts the row */
 .ut-links a::after {
@@ -121,10 +121,77 @@ body {
 .ut-links a.active { background: var(--ut-accent); color: var(--ut-accent-ink); font-weight: 600; }
 .ut-ico { height: 1em; width: auto; vertical-align: -0.15em; }
 .ut-ico-wide { height: 0.85em; }
-@media (max-width: 700px) {
-  .ut-nav { gap: 8px; padding: 0 10px; }
-  .ut-brand { font-size: 14px; }
-  .ut-links a { padding: 5px 9px; font-size: 12.5px; }
+/* Icon and label are separate spans so the collapsed menu can put the icons
+   in a fixed column; inline (wide) nav keeps them flowing like plain text. */
+.ut-nav-ico { display: inline; white-space: nowrap; }
+.ut-nav-name { white-space: nowrap; }
+
+/* Menu button + click-away layer: only used in the collapsed (narrow) layout */
+.ut-toggle { display: none; }
+.ut-scrim { display: none; }
+
+/* Wide layout keeps the inline row, so hint that it scrolls by fading the
+   edge where links are cut off (classes set by nav.js only when overflowing) */
+@media (min-width: 901px) {
+  .ut-links.ut-fade-l, .ut-links.ut-fade-r { -webkit-mask-image: var(--ut-fade-both); mask-image: var(--ut-fade-both); }
+  .ut-links.ut-fade-r:not(.ut-fade-l) { -webkit-mask-image: var(--ut-fade-r); mask-image: var(--ut-fade-r); }
+  .ut-links.ut-fade-l:not(.ut-fade-r) { -webkit-mask-image: var(--ut-fade-l); mask-image: var(--ut-fade-l); }
+  .ut-links { --ut-fade-r: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
+              --ut-fade-l: linear-gradient(90deg, transparent 0, #000 28px, #000 100%);
+              --ut-fade-both: linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%); }
+}
+
+@media (max-width: 900px) {
+  /* Collapsed bar keeps a fixed height so sticky tool headers still sit under it */
+  :root { --ut-nav-h: 60px; }
+
+  .ut-nav { gap: 10px; padding: 0 12px; }
+  .ut-brand { font-size: 18px; gap: 8px; }
+  .ut-brand img { height: 30px; }
+
+  .ut-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    order: 3; margin-left: auto; flex: 0 0 auto;
+    height: 40px; min-width: 40px; padding: 0 12px;
+    background: var(--ut-panel2); color: var(--ut-ink);
+    border: 1px solid var(--ut-line); border-radius: 999px;
+    font: inherit; font-size: 15px; font-weight: 600;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .ut-toggle:hover, .ut-toggle:focus-visible { background: #332e27; }
+  .ut-toggle::after { content: "☰ Menu"; }
+  .ut-menu-open .ut-toggle::after { content: "✕ Close"; }
+
+  /* Links collapse into a dropdown panel under the bar */
+  .ut-links {
+    position: absolute; top: 100%; left: 0; right: 0;
+    display: none; flex-direction: column; align-items: stretch; gap: 2px;
+    flex: none; min-width: 0;
+    max-height: calc(100vh - var(--ut-nav-h)); overflow: auto; overscroll-behavior: contain;
+    padding: 8px 12px 14px;
+    background: #1d1a16; border-bottom: 1px solid var(--ut-line);
+    box-shadow: var(--ut-shadow);
+    -webkit-overflow-scrolling: touch;
+  }
+  .ut-menu-open .ut-links { display: flex; animation: ut-menu-in .16s ease-out; }
+  @keyframes ut-menu-in { from { opacity: 0; transform: translateY(-8px); } }
+  @media (prefers-reduced-motion: reduce) { .ut-menu-open .ut-links { animation: none; } }
+  .ut-links a { display: flex; align-items: center; gap: 12px; padding: 13px 14px; font-size: 19px; border-radius: 10px; }
+  /* One icon column, sized to the widest nav icon, so every label lines up */
+  .ut-nav-ico { flex: 0 0 32px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .ut-nav-ico img { max-width: 100%; object-fit: contain; }
+  .ut-nav-name { flex: 1 1 auto; }
+  .ut-links a:active { background: var(--ut-panel2); }
+  /* Vertical list never reflows, so the bold-width reservation isn't needed */
+  .ut-links a::after { display: none; }
+
+  /* Dim the page behind the open menu (below the nav's z-index, above tool content) */
+  .ut-scrim {
+    position: fixed; inset: var(--ut-nav-h) 0 0 0; z-index: 89;
+    background: rgba(0, 0, 0, .55);
+  }
+  .ut-menu-open .ut-scrim { display: block; animation: ut-scrim-in .16s ease-out; }
+  @keyframes ut-scrim-in { from { opacity: 0; } }
 }
 
 /* ============================================================
