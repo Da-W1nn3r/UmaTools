@@ -184,7 +184,7 @@ below use the current meta (opponent ≈ 0 adoption) unless stated.
 
 ### Why these are the optimal picks
 
-1. **Lone Wolf: exactly one copy, never more.** A second copy on your own team
+1. **Lone Wolf: exactly one copy.** A second copy on your own team
    sets `same_skill_horse_count = 2` and scores 0 for both. One copy in
    Sprint/Mile/Dirt is a near-constant **+500 pt every race** — the single most
    reliable activation of the three skills. In Medium its EV is exactly 0 and
@@ -201,10 +201,10 @@ below use the current meta (opponent ≈ 0 adoption) unless stated.
    - Long: **Sympathy ×3 (+ Lone Wolf ×1) → EV 1357 pt**
    - Full 5-race TT round (Sprint, Mile, Medium, Long, Dirt): **≈ 8214 expected pt**
      from these skills alone, vs 0 for the current no-adoption meta.
-4. **Competitive Spirit loses even when you cheat for it.** Its best case —
+4. **Competitive Spirit doesn't work.** Its best case —
    all 3 umas stacked in one style with CS — yields 804 pt (1286 crediting the
    opponent's style match), still below Sympathy ×3's 1339, *and* it forfeits
-   the style-diversity scoring that motivated spreading styles in the first
+   the good positioning scoring that motivates spreading styles in the first
    place. Under the diverse-team meta it is worth exactly 0 pt: skip entirely.
 
 ### Consistency vs expectation
