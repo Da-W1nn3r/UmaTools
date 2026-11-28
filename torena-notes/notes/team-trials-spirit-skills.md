@@ -227,7 +227,7 @@ combo wins; no race type is a better or worse habitat for Sympathy than another.
 - Competitive Spirit gains nothing from opponent style matches under the
   diverse-team meta — the census still can't reach 5.
 
-## Caveats / assumptions
+## Caveats
 
 1. 6 NPCs modeled as distinct uniform draws from the 8-build pool; server-side
    generation is not in the master DB. This may change when new updates get introduced.
