@@ -2,9 +2,9 @@
 
 Author: Da_W1nn3r
 
-Published: 10/26/2026
+Published: 11/26/2026
 
-Updated: 11/26/2026
+Updated: 11/28/2026
 
 
 Scope: Team Trials (Team Stadium) races — **12 runners = 3 of your team + 3 opponent
@@ -15,12 +15,12 @@ Assumptions: We are working with base value with no forms of scaling to the poin
 
 ## 1. Skill mechanics (from `skill_data`)
 
-| Skill | ID | Condition (verbatim) | Meaning in a 12-runner race | Effect (whole race) | Cost |
+| Skill | ID | Condition (verbatim) | Meaning in a 12-runner race | Effect (whole race) | Base SP Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Competitive Spirit ○ | 200282 | `running_style_count_same_rate>=40` | ≥40% of the field runs your style → **5 of 12** (4/12 = 33% fails, 5/12 = 41.7% passes; count includes the holder) | **+40 Power** | 129 |
-| Competitive Spirit ◎ | 200281 | same | same | **+60 Power** | 174 |
-| Lone Wolf | 201641 | `same_skill_horse_count==1` | You are the **only** runner in the entire field with Lone Wolf | **+40 Speed** | 129 |
-| Sympathy | 201631 | `same_skill_horse_count>=5` | **≥5 runners** in the field have Sympathy (any team, NPCs included) | **+40 Speed** | 129 |
+| Competitive Spirit ○ | 200282 | `running_style_count_same_rate>=40` | ≥40% of the field runs your style → **5 of 12** (4/12 = 33% fails, 5/12 = 41.7% passes; count includes the holder) | **+40 Power** | 90 |
+| Competitive Spirit ◎ | 200281 | same | same | **+60 Power** | 200 |
+| Lone Wolf | 201641 | `same_skill_horse_count==1` | You are the **only** runner in the entire field with Lone Wolf | **+40 Speed** | 70 |
+| Sympathy | 201631 | `same_skill_horse_count>=5` | **≥5 runners** in the field have Sympathy (any team, NPCs included) | **+40 Speed** | 70 |
 
 All are green (passive) skills, active for the whole race (`float_ability_time = -1`).
 Note the asymmetry: Lone Wolf is a *denial* skill (any second holder kills it for
